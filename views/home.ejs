@@ -7,9 +7,15 @@
 </head>
 <body>
     <h1>Home</h1>
-    <a href="/login">Login</a>
-    <a href="/register">Register</a>
-    <a href="/logout">Log Out</a>
+    <%if(user.username){%>
+        <h2 class="welcome">Welcome, <%=user.displayedUsername%>!</h2>
+        <a href="/logout">Log Out</a>
+
+    <%}else{%>
+        <a href="/login">Login</a>
+        <a href="/register">Register</a>
+    <%}%>
+
 
     <%if(files.length === 0){%>
         <h3>You have no uploaded files </h3>

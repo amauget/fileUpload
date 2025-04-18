@@ -31,7 +31,7 @@ app.use(
     )
   })
 )
-
+app.use(passport.initialize())
 app.use(passport.session())
 
 const assetPath = path.join(__dirname, 'public')

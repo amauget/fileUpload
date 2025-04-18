@@ -10,14 +10,14 @@ router.get('/', (req, res) => {
 router.post('/', async (req, res, error) =>{
     const isRegistered = await registerUser(req.body)
     
-    // if(isRegistered){
-    //     console.log('success')
-    //     res.redirect('login')
-    // }
-    // else{
-    //     console.log('invalid')
-    //     res.render('register')
-    // }
+    if(isRegistered){
+        console.log('success')
+        res.redirect('login')
+    }
+    else{
+        console.log('invalid')
+        res.render('register')
+    }
    
 })
 

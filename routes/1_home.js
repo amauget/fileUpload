@@ -2,9 +2,13 @@ const { Router } = require('express')
 const router = Router()
 
 router.get('/', (req, res) => {
-    console.log(req.user)
-    const files = []
-    res.render('home', {files:files })
+    let user = {}
+    let files = []
+    if(req.user){
+        user = req.user
+    }
+    
+    res.render('home', {user: user, files: files })
 })
 
 module.exports = router

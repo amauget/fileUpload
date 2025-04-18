@@ -6,26 +6,32 @@ const prisma = new PrismaClient()
 
 const registerUser = async ({ username, password, secondPassword }) => {
     try{
-        console.log(username, password, secondPassword)
-        const usernameClean = htmlEscape(username.toLowerCase()) //removes dangerous chars & converts to lowercase
+        const usernameClean = htmlEscape(username) //removes dangerous chars & converts to lowercase
         const passwordClean = htmlEscape(password)
-    
-        const validUsername = await checkUsername(usernameClean)
-    
-        if(validUsername && passwordClean === secondPassword){
-            const { salt, hash } = genPassword(password)
-            const registered = await prisma.users.create({
-                data: {
-                    username: usernameClean,
-                    password: hash,
-                    salt: salt
-                }
-            }) 
-            console.log(registered)
-            console.log("registered variable^^^")
-            return true
+        
+        if(username === usernameClean && passwordClean === secondPassword){
+            const validUsername = await checkUsername(usernameClean)
+            if(validUsername){
+                const { salt, hash } = genPassword(password)
+                const registered = await prisma.users.create({
+                    data: {
+                        username: usernameClean.toLowerCase(), //lowercase to remove case sensitivity from username duplicate audit
+                        displayedUsername: usernameClean, //shows desired username for registered user
+                        password: hash,
+                        salt: salt
+                    }
+                }) 
+                //successful
+                return 'Success'
+            }
+            return 'Username taken'
         }
-        return false
+        else if(username === usernameClean && password !== secondPassword){
+            //passwords don't match.
+            return 'Passwords do not match.'
+        }
+
+        return 403
     }
     catch(err){
         console.error(err)

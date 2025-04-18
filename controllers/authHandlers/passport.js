@@ -23,9 +23,10 @@ const verifyLogin = async (username, password, done) => {
 
     try{
         const validPassword = validatePassword(passwordClean, findUser[0].password, findUser[0].salt)
-        
+        // console.log(findUser)
+
         if(validPassword && findUser.length === 1){
-           return done(null, findUser)
+           return done(null, findUser[0])
         }
         done(null, false)
     }
@@ -36,24 +37,25 @@ const verifyLogin = async (username, password, done) => {
 
 }
 
-passport.serializeUser((Session, done) => { 
-    console.log(Session[0].id)
+passport.serializeUser((user, done) => { 
+    console.log(user)
     try{
-        done(null, Session)
+        done(null, user.id)
     }catch(err){
         console.log('error serialize')
     }
 })
 
-passport.deserializeUser(async (Session, done) => {
+passport.deserializeUser(async (id, done) => {
     try{
-        const id = Session[0].id
-        const user = await prisma.Session.findUnique({
+        console.log(id)
+        console.log('id')
+        const user = await prisma.users.findUnique({
             where: {
                 id: id
             }
         })
-        
+        console.log(user)
        
         if (!user) return done(null, false)
 

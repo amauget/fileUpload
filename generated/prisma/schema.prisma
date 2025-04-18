@@ -22,10 +22,11 @@ model Session {
 }
 
 model users {
-  id       String @id @default(uuid())
-  username String @unique
-  password String
-  salt     String
+  id                String @id @default(uuid())
+  username          String @unique
+  displayedUsername String @unique
+  password          String
+  salt              String
 }
 
 model userFiles {
