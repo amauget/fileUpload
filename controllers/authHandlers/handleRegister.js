@@ -21,17 +21,15 @@ const registerUser = async ({ username, password, secondPassword }) => {
                         salt: salt
                     }
                 }) 
-                //successful
+        
                 return 'Success'
             }
             return 'Username taken'
         }
         else if(username === usernameClean && password !== secondPassword){
-            //passwords don't match.
             return 'Passwords do not match.'
         }
-
-        return 403
+        return '403... Bad user! Quit looking for unsafe character loopholes!'
     }
     catch(err){
         console.error(err)

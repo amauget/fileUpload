@@ -52,10 +52,10 @@ app.listen(PORT, () => {
    
 })
 
-// async function seeTable(){
-//   const output = await prisma.users.findMany()
-//   console.log(output) 
-// }
+async function seeTable(){
+  const output = await prisma.users.findMany()
+  console.log(output) 
+}
 // seeTable()
 
 

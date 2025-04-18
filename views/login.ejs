@@ -9,11 +9,31 @@
     <h1>Log in</h1>
     <form action="/login" method="post">
         <label for="username">Username</label>
-        <input type="text" name="username" required>
+        <input type="text" name="username" required onkeydown=preventChars()>
         <label for="password">Password: </label>
-        <input type="password" name="password" required>
+        <input type="password" name="password" required onkeydown=preventChars()>
 
         <button>submit</button>
     </form>
 </body>
+<script>
+    function preventChars(){
+        const unsafeChars = ["'", '"', '>', '<', '&']
+        if(unsafeChars.filter(char => {return char === event.key}).length > 0){
+            event.preventDefault()
+            renderCharQueue()
+        }
+    }
+
+    function renderCharQueue(){
+        if(! document.querySelector('.charQueue')){
+            const body = document.querySelector('body')
+            const charQueue = document.createElement('p')
+            charQueue.className = 'charQueue'
+            charQueue.textContent = `Characters: "'", '"', '>', '<', '&' are not allowed.`
+            
+            body.appendChild(charQueue)
+        }
+    }
+</script>
 </html>

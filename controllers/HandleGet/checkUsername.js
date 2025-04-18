@@ -10,6 +10,5 @@ async function checkUsername(username){
     console.log(usernameSearch)
     return usernameSearch.length === 0
 }
-// checkUsername('Ron')
 module.exports = checkUsername
 

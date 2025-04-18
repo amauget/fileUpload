@@ -6,21 +6,24 @@
     <title>Home Page</title>
 </head>
 <body>
-    <h1>Home</h1>
+    
     <%if(user.username){%>
         <h2 class="welcome">Welcome, <%=user.displayedUsername%>!</h2>
         <a href="/logout">Log Out</a>
 
+        <%if(files.length === 0){%>
+            <h3>You have no uploaded files </h3>
+        <%}else{%>
+            <h3>Your files:</h3>
+        <%}%>
+
     <%}else{%>
+        <h1>Home</h1>
         <a href="/login">Login</a>
         <a href="/register">Register</a>
     <%}%>
 
 
-    <%if(files.length === 0){%>
-        <h3>You have no uploaded files </h3>
-    <%}else{%>
-        <h3>Your files:</h3>
-    <%}%>
+    
 </body>
 </html>
