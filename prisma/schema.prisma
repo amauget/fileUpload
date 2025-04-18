@@ -29,8 +29,12 @@ model users {
 }
 
 model userFiles {
-  id        String  @id
   username  String  @default("unknown_user") 
   filename  String  @unique
+  salt      String
+  date      DateTime 
+
 }
+
+
 

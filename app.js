@@ -53,10 +53,10 @@ app.listen(PORT, () => {
 })
 
 async function seeTable(){
-  const output = await prisma.users.findMany()
+  const output = await prisma.userFiles.findMany()
   console.log(output) 
 }
-// seeTable()
+seeTable()
 
 
 // async function clearDatabase() {

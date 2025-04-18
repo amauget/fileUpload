@@ -16,7 +16,7 @@
     "prisma": "^6.6.0"
   },
   "scripts": {
-    "live":"node --watch app.js",
+    "live": "node --watch app.js",
     "migrate": "npx prisma migrate dev --name init",
     "test": "jest",
     "testLive": "nodemon --exec 'jest' --watchAll"

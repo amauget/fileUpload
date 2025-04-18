@@ -4,7 +4,6 @@ const router = Router()
 router.get('/', (req, res) => {
     let user = {}
     let files = []
-    console.log(req.user)
     if(req.user){
         user = req.user
     }

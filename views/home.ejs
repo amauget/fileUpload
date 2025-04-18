@@ -10,12 +10,26 @@
     <%if(user.username){%>
         <h2 class="welcome">Welcome, <%=user.displayedUsername%>!</h2>
         <a href="/logout">Log Out</a>
+        <a href="/upload">Upload Files</a>
 
         <%if(files.length === 0){%>
             <h3>You have no uploaded files </h3>
         <%}else{%>
             <h3>Your files:</h3>
         <%}%>
+
+        <input type="text" class="search" placeholder="search your files" onkeyup=searchFiles()>
+        <div class="fileContainer">
+            <a id="file">file1</a>
+            <a id="file">file2</a>
+            <a id="file">file3</a>
+            <a id="file">file4</a>
+            <a id="file">file5</a>
+            <a id="file">file6</a>
+            <a id="file">file7</a>
+            <a id="file">file8</a>
+            <a id="file">file9</a>
+        </div>
 
     <%}else{%>
         <h1>Home</h1>
@@ -26,4 +40,18 @@
 
     
 </body>
+<script>
+    function searchFiles(){
+        const files = document.querySelectorAll('#file')
+
+        for(let i of files){
+           if(i.textContent.includes(event.target.value.toLowerCase())){
+                i.style.display = 'block'
+           }
+           else{
+                i.style.display = 'none'
+           }
+        }
+    }
+</script>
 </html>
