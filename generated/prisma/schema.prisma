@@ -15,13 +15,14 @@ datasource db {
 }
 
 model Session {
-  id        String   @id
+  id        String   @id @default(uuid())
   sid       String   @unique
   data      String
   expiresAt DateTime
 }
 
 model users {
+  id       String @id @default(uuid())
   username String @unique
   password String
   salt     String

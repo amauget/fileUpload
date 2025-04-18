@@ -1,9 +1,10 @@
 const passport = require('passport')
 const LocalStrategy = require('passport-local').Strategy
-const { validatePassword, genPassword } = require('./passwordUtilities')
+
 const { PrismaClient } = require('../../generated/prisma')
 const prisma = new PrismaClient()
 const { htmlEscape } = require('../handleUnsafeChars')
+const { validatePassword } = require('./passwordUtilities')
 
 
 const customFields = {
@@ -12,72 +13,64 @@ const customFields = {
 }
 
 const verifyLogin = async (username, password, done) => {
-    const usernameClean = htmlEscape(username)
+    const usernameClean = htmlEscape(username.toLowerCase())
     const passwordClean = htmlEscape(password)
-
     const findUser = await prisma.users.findMany({
         where: {
             username: usernameClean,
         }
     })
+
     try{
         const validPassword = validatePassword(passwordClean, findUser[0].password, findUser[0].salt)
-        return  validPassword && findUser.length === 1
-
+        
+        if(validPassword && findUser.length === 1){
+           return done(null, findUser)
+        }
+        done(null, false)
     }
     catch(err){
-        return false
+        console.log('error verify login')
+        done(err)
     }
 
 }
 
-const registerUser = async (username, password, secondPassword, done) => {
-    const passwordClean = htmlEscape(password)
-    if(passwordClean === secondPassword){
-        const { salt, hash } = genPassword(password)
-        const registered = await prisma.users.create({
-            data: {
-                username: username,
-                password: hash,
-                salt: salt
-            }
-        })
-    
-        done(registered)
+passport.serializeUser((Session, done) => { 
+    console.log(Session[0].id)
+    try{
+        done(null, Session)
+    }catch(err){
+        console.log('error serialize')
     }
-    done(null)
- 
-}
-
-passport.serializeUser((user, done) => { 
-    done(null, user.id)
 })
 
-passport.deserializeUser(async (id, done) => {
+passport.deserializeUser(async (Session, done) => {
     try{
-        const user = await prisma.Session.findMany({
+        const id = Session[0].id
+        const user = await prisma.Session.findUnique({
             where: {
                 id: id
             }
         })
+        
+       
+        if (!user) return done(null, false)
 
-        done(null, user[0])
+        done(null, user)
     }
     catch(err){
+        console.log('error')
         console.error(err)
         done(err)
-        /* ADD DOM BEHAVIOR HERE */
     }
 })
 
 //implement custom "verifyLogin" strategy
-const strategy = new LocalStrategy(customFields, verifyLogin, registerUser)
-passport.use(strategy)
+const loginStrategy = new LocalStrategy(customFields, verifyLogin)
+loginStrategy.name = 'login'
+passport.use(loginStrategy)
 
-async function seeTable(){
-    const output = await prisma.users.findMany()
-    console.log(output) 
-}
-seeTable()
+
 
 module.exports = passport

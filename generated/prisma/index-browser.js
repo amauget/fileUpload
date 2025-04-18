@@ -125,6 +125,7 @@ exports.Prisma.SessionScalarFieldEnum = {
 };
 
 exports.Prisma.UsersScalarFieldEnum = {
+  id: 'id',
   username: 'username',
   password: 'password',
   salt: 'salt'
