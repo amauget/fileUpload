@@ -1,0 +1,5 @@
+-- AlterTable
+ALTER TABLE "userFiles" ADD COLUMN     "date" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP;
+
+-- AlterTable
+ALTER TABLE "users" ADD COLUMN     "storageSpace" INTEGER NOT NULL DEFAULT 0;

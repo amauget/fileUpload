@@ -7,6 +7,7 @@ router.get('/', (req, res) => {
     if(req.user){
         user = req.user
     }
+    console.log(user)
     
     res.render('home', {user: user, files: files })
 })

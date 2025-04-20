@@ -8,9 +8,9 @@
 <body>
     <h1 class="fileUpload">File Upload:</h1>
     <h3 class="storageSpace">You have __/5GB of storage left.</h3>
-    <form action="/upload" method="post">
+    <form action="/upload" method="post" enctype="multipart/form-data">
         <label for="file">Upload File</label>
-        <input type="file" class="fileInput" multiple>
+        <input type="file" name="fileUpload" class="fileUpload" multiple required onchange=console.log(event.target.file)>
         <button class="submit">Upload</button>
     </form>
 </body>

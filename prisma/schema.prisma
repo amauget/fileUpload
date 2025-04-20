@@ -26,14 +26,15 @@ model users {
   displayedUsername   String  @unique
   password            String      
   salt                String 
+  usedStorage        Int     @default(0)
 }
 
 model userFiles {
-  username  String  @default("unknown_user") 
-  filename  String  @unique
-  salt      String
-  date      DateTime 
-
+  id            String  @id @default(uuid())
+  username      String  @default("unknown_user") 
+  originalname  String  @unique
+  date          DateTime @default(now())
+  storageName   String  @unique
 }
 
 

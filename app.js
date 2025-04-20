@@ -56,19 +56,19 @@ async function seeTable(){
   const output = await prisma.userFiles.findMany()
   console.log(output) 
 }
-seeTable()
+// seeTable()
 
 
-// async function clearDatabase() {
-//   try {
-//     await prisma.Session.deleteMany({});
-//     await prisma.users.deleteMany({});
-//     // Add deleteMany calls for all your other models
-//     console.log('Successfully cleared all tables.');
-//   } catch (error) {
-//     console.error('Error clearing database:', error);
-//   } finally {
-//     await prisma.$disconnect();
-//   }
-// }
+async function clearDatabase() {
+  try {
+    // await prisma.Session.deleteMany({});
+    await prisma.userFiles.deleteMany({});
+    // Add deleteMany calls for all your other models
+    console.log('Successfully cleared all tables.');
+  } catch (error) {
+    console.error('Error clearing database:', error);
+  } finally {
+    await prisma.$disconnect();
+  }
+}
 // clearDatabase()

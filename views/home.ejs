@@ -20,11 +20,11 @@
 
         <input type="text" class="search" placeholder="search your files" onkeyup=searchFiles()>
         <div class="fileContainer">
-            <a id="file">file1</a>
-            <a id="file">file2</a>
-            <a id="file">file3</a>
-            <a id="file">file4</a>
-            <a id="file">file5</a>
+            <a id="file">apple</a>
+            <a id="file">america</a>
+            <a id="file">chess</a>
+            <a id="file">Zebra</a>
+            <a id="file">Baseball</a>
             <a id="file">file6</a>
             <a id="file">file7</a>
             <a id="file">file8</a>
@@ -45,7 +45,9 @@
         const files = document.querySelectorAll('#file')
 
         for(let i of files){
-           if(i.textContent.includes(event.target.value.toLowerCase())){
+            const fileName = i.textContent.toLowerCase()
+
+           if(fileName.includes(event.target.value.toLowerCase())){
                 i.style.display = 'block'
            }
            else{
