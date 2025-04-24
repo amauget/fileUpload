@@ -1,13 +1,15 @@
 const { Router } = require('express')
 const router = Router()
+const getUserFileData = require('../controllers/userFunctions/getUserFiles')
 
-router.get('/', (req, res) => {
+router.get('/', async (req, res) => {
     let user = {}
     let files = []
     if(req.user){
         user = req.user
+        files = await getUserFileData(user)
+        console.log(files)
     }
-    console.log(user)
     
     res.render('home', {user: user, files: files })
 })

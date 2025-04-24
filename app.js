@@ -58,13 +58,13 @@ async function seeTable(){
   // console.log(output)
   console.log(userFiles) 
 }
-seeTable()
+// seeTable()
 
 
 async function clearDatabase() {
   try {
     // await prisma.Session.deleteMany({});
-    await prisma.userFiles.deleteMany({});
+    await prisma.users.deleteMany({});
     // Add deleteMany calls for all your other models
     console.log('Successfully cleared all tables.');
   } catch (error) {

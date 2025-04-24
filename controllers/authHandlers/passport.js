@@ -23,7 +23,6 @@ const verifyLogin = async (username, password, done) => {
 
     try{
         const validPassword = validatePassword(passwordClean, findUser[0].password, findUser[0].salt)
-        // console.log(findUser)
 
         if(validPassword && findUser.length === 1){
            return done(null, findUser[0])
@@ -38,7 +37,6 @@ const verifyLogin = async (username, password, done) => {
 }
 
 passport.serializeUser((user, done) => { 
-    console.log(user)
     try{
         done(null, user.id)
     }catch(err){

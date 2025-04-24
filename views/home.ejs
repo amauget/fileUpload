@@ -19,17 +19,23 @@
         <%}%>
 
         <input type="text" class="search" placeholder="search your files" onkeyup=searchFiles()>
-        <div class="fileContainer">
-            <a id="file">apple</a>
-            <a id="file">america</a>
-            <a id="file">chess</a>
-            <a id="file">Zebra</a>
-            <a id="file">Baseball</a>
-            <a id="file">file6</a>
-            <a id="file">file7</a>
-            <a id="file">file8</a>
-            <a id="file">file9</a>
-        </div>
+        <% if(files.length > 0){%>
+            
+                <form action="/download" method="POST">
+                    <h2 class="formTitle">Select Files to Download</h2>
+                    <% files.map(file => { %>
+                        <div class="fileContainer">
+                            <label for="<%=file%>" id="file"><%=file%></label>
+                            <input type="radio" name="<%=file%>" id="<%=file%>">
+                        </div>
+                    <% }) %>
+                    <button class="downloadBtn">Download</button>
+    
+                </form>
+                
+           
+        <% } %>
+       
 
     <%}else{%>
         <h1>Home</h1>
@@ -46,12 +52,16 @@
 
         for(let i of files){
             const fileName = i.textContent.toLowerCase()
+            const fileRadio = document.getElementById(i.textContent)
 
            if(fileName.includes(event.target.value.toLowerCase())){
                 i.style.display = 'block'
+                fileRadio.style.display = 'block'
            }
            else{
                 i.style.display = 'none'
+
+                fileRadio.style.display = 'none'
            }
         }
     }
