@@ -8,6 +8,8 @@ multer
 passport & passport-local
 prisma
 prisma-session-store (npm install @quixo3/prisma-session-store express-session)
+jszip
+
 
 NEXT WEEKS NOTES (written 4/19)
     add error handling for uploads. If files write to server, but db doesn't update, delete the files.

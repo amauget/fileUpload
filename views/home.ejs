@@ -3,6 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/stylesheets/style.css">
+    <link rel="stylesheet" href="/stylesheets/home.css">
     <title>Home Page</title>
 </head>
 <body>
@@ -24,7 +26,8 @@
                 <form action="/download" method="POST">
                     <h2 class="formTitle">Select Files to Download</h2>
                     <% files.map(file => { %>
-                        <div class="fileContainer">
+                        <div class="fileContainer" id="<%=file%>">
+                            <img id="fileIcon" src=<%=pairFileIcon(file)%> alt="file icon">
                             <label for="<%=file%>" id="file"><%=file%></label>
                             <input type="radio" name="<%=file%>" id="<%=file%>">
                         </div>
@@ -43,7 +46,30 @@
         <a href="/register">Register</a>
     <%}%>
 
+    <% function pairFileIcon(file){ //called before render to assign img src
+        const fileImgSrc = { 
+            jpg: '/icons/jpg.png',
+            jpeg: '/icons/jpg.png',
+            pdf: '/icons/pdf.png',
+            css: '/icons/css.png',
+            html: '/icons/html.png',
+            js: '/icons/js.png',
+            
+            doc: '/icons/doc.png',
+            docx: '/icons/doc.png',
+            odt: '/icons/doc.png', 
+            rtf: '/icons/doc.png',
 
+            xls: '/icons/xl.png',
+            xlsx: '/icons/xl.png',
+            xlm: '/icons/xl.png',
+            ods: '/icons/xl.png', 
+            csv: '/icons/xl.png',
+            tsv: '/icons/xl.png',  
+       }
+        const fileType = file.split('.')[1].toLowerCase() 
+        return fileImgSrc[fileType] ? fileImgSrc[fileType] : '/icons/default.png'       
+    }%>
     
 </body>
 <script>
@@ -52,18 +78,19 @@
 
         for(let i of files){
             const fileName = i.textContent.toLowerCase()
-            const fileRadio = document.getElementById(i.textContent)
+            const fileContainer = document.getElementById(i.textContent)
 
            if(fileName.includes(event.target.value.toLowerCase())){
-                i.style.display = 'block'
-                fileRadio.style.display = 'block'
+                fileContainer.style.display = 'block'
            }
            else{
-                i.style.display = 'none'
+                fileContainer.style.display = 'none'
 
-                fileRadio.style.display = 'none'
            }
         }
     }
+
+ 
+    
 </script>
 </html>

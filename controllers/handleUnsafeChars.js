@@ -15,4 +15,13 @@ function htmlRestore(text) {
     .replaceAll("&lt;", "<")
     .replaceAll("&amp;", "&")
 }
-module.exports = { htmlEscape, htmlRestore }
+
+function cleanListKeys(list){
+  let fileNamesCleaned = []
+  for(let key in list){
+      fileNamesCleaned.push(htmlEscape(key))
+  }
+  return fileNamesCleaned
+}
+
+module.exports = { htmlEscape, htmlRestore, cleanListKeys }
