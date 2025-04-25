@@ -6,12 +6,11 @@ const createZip = require('../controllers/fileHandlers/createZip')
 
 router.post('/', async (req, res) => {
     const fileNamesCleaned =  cleanListKeys(req.body) //takes in list, htmlEscape keys, returns array 
+    if(fileNamesCleaned.length > 0){
+        const targetFiles = await getFileData(fileNamesCleaned)
     
-    const targetFiles = await getFileData(fileNamesCleaned)
-    
-    const zipFile = await createZip(targetFiles)
-
-    res.render('download')
+        const zipFile = await createZip(res, targetFiles)
+    }
 })
 
 module.exports = router

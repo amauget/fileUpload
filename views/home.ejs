@@ -17,22 +17,23 @@
         <%if(files.length === 0){%>
             <h3>You have no uploaded files </h3>
         <%}else{%>
+            <h3>You have <%=5 - user.usedStorage/(1000 **3)%>GB of remaining storage</h3>
             <h3>Your files:</h3>
         <%}%>
 
         <input type="text" class="search" placeholder="search your files" onkeyup=searchFiles()>
         <% if(files.length > 0){%>
             
-                <form action="/download" method="POST">
+                <form action="/download" method="POST" class="downloadForm">
                     <h2 class="formTitle">Select Files to Download</h2>
                     <% files.map(file => { %>
                         <div class="fileContainer" id="<%=file%>">
                             <img id="fileIcon" src=<%=pairFileIcon(file)%> alt="file icon">
                             <label for="<%=file%>" id="file"><%=file%></label>
-                            <input type="radio" name="<%=file%>" id="<%=file%>">
+                            <input type="radio" name="<%=file%>" id="<%=file%>" onmousedown=toggleRadio() onclick=event.preventDefault()>
                         </div>
                     <% }) %>
-                    <button class="downloadBtn">Download</button>
+                    <button class="downloadBtn" onclick=evalFormRadios()>Download</button>
     
                 </form>
                 
@@ -79,17 +80,35 @@
         for(let i of files){
             const fileName = i.textContent.toLowerCase()
             const fileContainer = document.getElementById(i.textContent)
+            const fileRadio = fileContainer.querySelector('input')
 
-           if(fileName.includes(event.target.value.toLowerCase())){
+           if(fileName.includes(event.target.value.toLowerCase()) || fileRadio.checked){
                 fileContainer.style.display = 'block'
            }
            else{
                 fileContainer.style.display = 'none'
-
            }
         }
     }
+    function toggleRadio(){
+        if(event.target.checked === true){
+           return event.target.checked = false
+        }
+        return event.target.checked = true
+    }
 
+    function evalFormRadios(){ //ensures that at least 1 radio is selected to submit form
+        event.preventDefault()
+        const downloadForm = document.querySelector('.downloadForm')
+        const radios = downloadForm.querySelectorAll('input')
+
+        for(let i = 0; i < radios.length; i++){
+            if(radios[i].checked){
+                downloadForm.submit()
+                break
+            }
+        }
+    }
  
     
 </script>
