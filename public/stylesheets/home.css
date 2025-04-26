@@ -1,4 +1,108 @@
-#fileIcon{
-    height: 5vh;
+.bodyContainer{
+    display: grid;
+    grid-template-columns: 1fr 2fr;
 
 }
+    .userSpace{
+        /* grid-row: 1/2; */
+    }
+  
+    .formComponentContainer{
+        grid-column: 1/2;
+        display: grid;
+        border-right: 1px solid black;
+    }
+        .formTitle{
+            grid-row: 1/2;
+            grid-column: 1/2;
+        }
+        .search{
+            grid-row: 2/3;
+            grid-column: 1/2;
+            justify-self: center;
+            width: 25vw;
+            font-size: 1.2rem;
+            justify-self: center;
+            align-self: center;
+        }
+        
+        .downloadForm{
+            grid-row: 3/4;
+            grid-column: 1/2;
+            max-height: 60vh;
+            overflow-y: auto;
+            /* display: grid;
+            grid-template-columns: repeat(2, auto); */
+
+        }
+            .fileContainer{
+                /* padding: 1vh 1vw; */
+                display: flex;
+
+                align-items: center;
+                justify-content: space-between;
+                text-align: center;
+            }
+                .imgContainer{
+                    display: grid;
+                    border:1px solid rgba(78, 78, 250, 0);
+                    padding: 1vw;
+                    width: fit-content;
+                }
+                .imgContainer:hover{
+                    cursor: pointer;
+                    border:1px solid rgb(78, 78, 250);
+                }
+                    #fileIcon{
+                        grid-row: 1/2;
+                        grid-column: 1/2;
+                        
+                        height: 5vh;
+                    }
+                    .preview{
+                        grid-row: 2/3;
+                        margin:0;
+                        /* color:rgba(0, 0, 0, 0); */
+                        /* background-color: rgba(128, 128, 128, 0.33); */
+                    }
+                #fileLabel{
+                    font-size: 1.35rem;
+                }
+                .fileRadio{
+
+                }
+                .fileRadio:hover{
+                    cursor: pointer;
+                }
+        .downloadBtn{
+            grid-row: 4/5;
+            grid-column: 1/2;
+            margin-top: 2vh;
+            justify-self: center;
+            align-self: center;
+            width: 10vw;
+            font-size: 1.2rem;
+            border: none;
+            background-color: rgb(78, 78, 250);
+            color: white;
+            border-radius: 15px;
+
+        }
+        .downloadBtn:hover{
+            cursor: pointer;
+            background-color: rgb(68, 68, 209);;
+        }
+        .filePrevContainer{
+            grid-row: 2/3;
+            grid-column: 2/3;
+            max-width: 65vw;
+            
+        }
+            .filePrevTitle{
+                font-size: 1.7rem;
+                justify-self: center;
+            }
+            .filePrevContainer img{
+                max-width: 55vw;
+
+            }

@@ -33,7 +33,7 @@ model users {
 model userFiles {
   id           String   @id @default(uuid())
   username     String   @default("unknown_user")
-  originalname String   @unique
+  originalname String
   date         DateTime @default(now())
   storageName  String   @unique
 }

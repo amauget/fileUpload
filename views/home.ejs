@@ -10,51 +10,80 @@
 <body>
     
     <%if(user.username){%>
-        <h2 class="welcome">Welcome, <%=user.displayedUsername%>!</h2>
-        <a href="/logout">Log Out</a>
-        <a href="/upload">Upload Files</a>
+        <div class="headerLoggedIn">
+            <h2 class="welcome">Welcome, <%=user.displayedUsername%>!</h2>
+            <a href="/upload">Upload Files</a>
 
+            <a href="/logout">Log Out</a>
+        </div>
+     
+    <div class="bodyContainer">
         <%if(files.length === 0){%>
             <h3>You have no uploaded files </h3>
         <%}else{%>
-            <h3>You have <%=5 - user.usedStorage/(1000 **3)%>GB of remaining storage</h3>
-            <h3>Your files:</h3>
+            <h3 class="userSpace">You have <%=(5 - user.usedStorage/(1000 **3)).toFixed(2)%>GB of remaining storage</h3>
+
         <%}%>
 
-        <input type="text" class="search" placeholder="search your files" onkeyup=searchFiles()>
         <% if(files.length > 0){%>
-            
+            <div class="formComponentContainer">
+                <h2 class="formTitle">Select Files to Download</h2>
+                <input type="text" class="search" placeholder="search your files" onkeyup=searchFiles()>
+
                 <form action="/download" method="POST" class="downloadForm">
-                    <h2 class="formTitle">Select Files to Download</h2>
                     <% files.map(file => { %>
                         <div class="fileContainer" id="<%=file%>">
-                            <img id="fileIcon" src=<%=pairFileIcon(file)%> alt="file icon">
-                            <label for="<%=file%>" id="file"><%=file%></label>
-                            <input type="radio" name="<%=file%>" id="<%=file%>" onmousedown=toggleRadio() onclick=event.preventDefault()>
+                            <div class="imgContainer">
+                                <img id="fileIcon" src=<%=pairFileIcon(file)%> alt="file icon" onclick=previewFile()>
+                                <p class="preview">preview</p>
+                            </div>
+                          
+                            <label for="<%=file%>" id="fileLabel"><%=file%></label>
+                            <input class="fileRadio" type="radio" name="<%=file%>" id="<%=file%>" onmousedown=toggleRadio() onclick=event.preventDefault()>
                         </div>
-                    <% }) %>
-                    <button class="downloadBtn" onclick=evalFormRadios()>Download</button>
-    
+                    <% }) %>    
                 </form>
-                
+                <button class="downloadBtn" onclick=evalFormRadios()>Download</button>
+
+            </div>
+
+            <div class="filePrevContainer">
+                <h2 class="filePrevTitle">File Preview</h2>
+                <div class="filePreview">
+                    <img class='previewTest'src="" alt="">
+                </div>
+            </div>
            
         <% } %>
+    </div>
+
+  
        
 
     <%}else{%>
-        <h1>Home</h1>
-        <a href="/login">Login</a>
-        <a href="/register">Register</a>
+        <div class="headerNoLogin">
+            <h1>Home</h1>
+            <a href="/login">Login</a>
+            <a href="/register">Register</a>
+        </div>
+     
     <%}%>
 
     <% function pairFileIcon(file){ //called before render to assign img src
         const fileImgSrc = { 
-            jpg: '/icons/jpg.png',
-            jpeg: '/icons/jpg.png',
             pdf: '/icons/pdf.png',
             css: '/icons/css.png',
             html: '/icons/html.png',
             js: '/icons/js.png',
+
+            jpg: '/icons/jpg.png',
+            jpeg: '/icons/jpg.png',
+
+            mp4: '/icons/video.png',
+            mov: '/icons/video.png',
+            avi: '/icons/video.png',
+            wmv: '/icons/video.png',
+
             
             doc: '/icons/doc.png',
             docx: '/icons/doc.png',
@@ -75,7 +104,7 @@
 </body>
 <script>
     function searchFiles(){
-        const files = document.querySelectorAll('#file')
+        const files = document.querySelectorAll('#fileLabel')
 
         for(let i of files){
             const fileName = i.textContent.toLowerCase()
@@ -83,7 +112,7 @@
             const fileRadio = fileContainer.querySelector('input')
 
            if(fileName.includes(event.target.value.toLowerCase()) || fileRadio.checked){
-                fileContainer.style.display = 'block'
+                fileContainer.style.display = 'flex'
            }
            else{
                 fileContainer.style.display = 'none'
@@ -109,7 +138,21 @@
             }
         }
     }
- 
+
+
+function previewFile(){
+    const imgContainer = event.target.parentNode
+    const fileName = (imgContainer.parentNode).querySelector('label').textContent
+
+    const imgPrev = document.querySelector('.previewTest')
+    fetch(`/preview/?id=${fileName}`)
+    .then(res => res.text())
+    .then(stream => imgPrev.src = `data:image/jpeg;base64,${stream}`)
+
+   
+}
     
 </script>
 </html>
+
+

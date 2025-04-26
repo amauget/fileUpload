@@ -2,3 +2,18 @@
     padding: 0;
     margin: 0;
 }
+.headerNoLogin{
+    display: flex;
+    justify-content: space-evenly;
+}
+
+.headerLoggedIn{
+    display: grid;
+    grid-template-rows: 1fr;
+    grid-template-columns: 3fr 1fr 1fr;
+    align-items: center;
+    border-bottom: solid 1px black;
+}
+
+    
+        

@@ -8,9 +8,7 @@ router.get('/', async (req, res) => {
     if(req.user){
         user = req.user
         files = await getUserFileData(user)
-        console.log(files)
     }
-    console.log(user)
     
     res.render('home', {user: user, files: files })
 })

@@ -4324,14 +4324,14 @@ export namespace Prisma {
 
   export type userFilesWhereUniqueInput = Prisma.AtLeast<{
     id?: string
-    originalname?: string
     storageName?: string
     AND?: userFilesWhereInput | userFilesWhereInput[]
     OR?: userFilesWhereInput[]
     NOT?: userFilesWhereInput | userFilesWhereInput[]
     username?: StringFilter<"userFiles"> | string
+    originalname?: StringFilter<"userFiles"> | string
     date?: DateTimeFilter<"userFiles"> | Date | string
-  }, "id" | "originalname" | "storageName">
+  }, "id" | "storageName">
 
   export type userFilesOrderByWithAggregationInput = {
     id?: SortOrder

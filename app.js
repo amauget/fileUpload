@@ -52,6 +52,7 @@ app.listen(PORT, () => {
    
 })
 
+
 async function seeTable(){
   const output = await prisma.users.findMany()
   const userFiles = await prisma.userFiles.findMany()
@@ -64,7 +65,7 @@ async function seeTable(){
 async function clearDatabase() {
   try {
     // await prisma.Session.deleteMany({});
-    await prisma.users.deleteMany({});
+    await prisma.userFiles.deleteMany({});
     // Add deleteMany calls for all your other models
     console.log('Successfully cleared all tables.');
   } catch (error) {
@@ -74,3 +75,4 @@ async function clearDatabase() {
   }
 }
 // clearDatabase()
+
