@@ -102,7 +102,9 @@
                 font-size: 1.7rem;
                 justify-self: center;
             }
-            .filePrevContainer img{
-                max-width: 55vw;
+            .previewTest{
+                width: 55vw;
+                height: 70vh;
 
             }
+                

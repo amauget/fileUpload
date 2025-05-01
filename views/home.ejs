@@ -50,7 +50,7 @@
             <div class="filePrevContainer">
                 <h2 class="filePrevTitle">File Preview</h2>
                 <div class="filePreview">
-                    <img class='previewTest'src="" alt="">
+                   
                 </div>
             </div>
            
@@ -139,19 +139,91 @@
         }
     }
 
+    
 
 function previewFile(){
+    const fileToElement = { 
+            pdf: {
+                    element: 'iframe', 
+                    mimeType:'application/pdf' 
+                },
+
+            jpg: {
+                    element: 'img',
+                    mimeType: 'image/jpeg',
+                },
+            jpeg: {
+                    element: 'img',
+                    mimeType: 'image/jpeg',
+                },
+
+            mp4: {
+                    element: 'video',
+                    mimeType: 'video/mp4'
+                },
+            mov: {
+                    element: 'video',
+                    mimeType: 'video/quicktime'
+                },
+            avi: {
+                    element: 'video',
+                    mimeType: 'video/mp4'
+                },
+            wmv: {
+                    element: 'video',
+                    mimeType: 'video/webm'
+                },
+            
+            // doc: '/icons/doc.png',
+            // docx: '/icons/doc.png',
+            // odt: '/icons/doc.png', 
+            // rtf: '/icons/doc.png',
+
+            // xls: '/icons/xl.png',
+            // xlsx: '/icons/xl.png',
+            // xlm: '/icons/xl.png',
+            // ods: '/icons/xl.png', 
+            // csv: '/icons/xl.png',
+            // tsv: '/icons/xl.png',  
+       } 
     const imgContainer = event.target.parentNode
     const fileName = (imgContainer.parentNode).querySelector('label').textContent
+    //sending fileName to server for location
+    const filePreview = document.querySelector('.filePreview')
+    filePreview.innerHTML = ''
 
-    const imgPrev = document.querySelector('.previewTest')
+    const fileType = fileToElement[determineFileType(fileName)]
+    
+    const previewElement = document.createElement(fileType.element)
+    previewElement.className = 'previewTest'
+    if(fileType.element === 'video'){
+        previewElement.controls = true
+    }
+    
+    filePreview.appendChild(previewElement)
+
+    
+
     fetch(`/preview/?id=${fileName}`)
     .then(res => res.text())
-    .then(stream => imgPrev.src = `data:image/jpeg;base64,${stream}`)
-
-   
-}
+    .then(stream => 
+        previewElement.src = `data:${fileType.mimeType};base64,${stream}`
+    )
     
+}
+
+function determineFileType(src){
+    let fileType = []
+    for(let i = src.length - 1; i > -1; i--){
+        if(src[i] === '.'){
+            break
+        }
+        fileType.splice(0, 0, src[i])
+    }
+    return fileType.join().replaceAll(',','').replace('.png', '')
+    
+}
+
 </script>
 </html>
 
