@@ -1,6 +1,7 @@
-:root{
-    padding: 0;
+:root, body{
     margin: 0;
+    padding: 0;
+    font-size: 1rem;
 }
 .headerNoLogin{
     display: flex;

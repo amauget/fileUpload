@@ -40,10 +40,11 @@ function previewFile(){
     fetch(`/preview/?id=${fileName}`)
         .then(res => res.text())
         .then(stream => 
-            renderPreview(fileType, stream)
+            renderPreview(fileType, fileName, stream)
         )
             .catch(err =>{
-                renderUnavailable(fileName)
+                console.log(err)
+                renderUnavailable(fileName, true)
             })
 }
 
@@ -58,37 +59,48 @@ function determineFileType(src){
     return fileType.join().replaceAll(',','').replace('.png', '')
 }
 
-function renderPreview(fileType, stream){
-    const filePreview = document.querySelector('.filePreview')
-    filePreview.innerHTML = ''
-    
-    const previewElement = document.createElement(fileType.element)
-    previewElement.className = 'previewTest'
-    previewElement.src = `data:${fileType.mimeType};base64,${stream}`
-
-    if(fileType.element === 'video'){
-        previewElement.controls = true
+function renderPreview(fileType, fileName, stream){
+    if(fileType === undefined){
+        renderUnavailable(fileName, false)
     }
-
-    filePreview.appendChild(previewElement)
-    return filePreview
+    else{
+        const filePreview = document.querySelector('.filePreview')
+        filePreview.innerHTML = ''
+        
+        const previewElement = document.createElement(fileType.element)
+        previewElement.className = 'previewTest'
+        previewElement.src = `data:${fileType.mimeType};base64,${stream}`
+    
+        if(fileType.element === 'video'){
+            previewElement.controls = true
+        }
+    
+        filePreview.appendChild(previewElement)
+    }
+  
 }
 
-function renderUnavailable(fileName){
-    const fileType = determineFileType(fileName)
-
+function renderUnavailable(fileName, err){
     const filePreview = document.querySelector('.filePreview')
     filePreview.innerHTML = ''
+
+    const fileType = determineFileType(fileName)
 
     const prevNotAvail = document.createElement('h3')
     prevNotAvail.className = 'previewTest'
 
-    if(fileType === 'docx' || fileType === 'xlsx'){
+    if(err){
+        prevNotAvail.textContent = 'An error occurred while retrieving this file. Please try again later.'
+    }
+    else if(fileType === 'docx' || fileType === 'xlsx'){
         prevNotAvail.textContent = `I really wanted to render "${fileType}" files. But not enough to get a MS Office license...`
     }
     else{
         prevNotAvail.textContent = 'No preview for this file type.'
 
     }
+
     filePreview.appendChild(prevNotAvail)
+ 
+
 }

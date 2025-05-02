@@ -3,19 +3,20 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Delete Files</title>
     <link rel="stylesheet" href="/stylesheets/style.css">
     <link rel="stylesheet" href="/stylesheets/home.css">
+    <link rel="stylesheet" href="/stylesheets/delete.css">
     <script type="text/javascript" src="/scripts/search.js"></script>
     <script type="text/javascript" src="/scripts/previewFile.js"></script>
     <script type="text/javascript" src="/scripts/radioHandlers.js"></script>
-    <title>Home Page</title>
+    <script type="text/javascript" src="/scripts/formatDelete.js"></script>
+
 </head>
 <body>
     <%if(user.username){%>
         <div class="headerLoggedIn">
-            <h2 class="welcome"><%=user.displayedUsername%></h2>
-            <a href="/delete">Delete Files</a>
-
+            <a href="/" class="welcome"><h2><%=user.displayedUsername%></h2></a>
             <a href="/upload">Upload Files</a>
 
             <a href="/logout">Log Out</a>
@@ -31,17 +32,17 @@
 
         <% if(files.length > 0){%>
             <div class="formComponentContainer">
-                <h2 class="formTitle">Select Files to Download</h2>
+                <h2 class="formTitle" style="color:rgb(255, 0, 0); justify-self: center;">Select Files to DELETE</h2>
                 <input type="text" class="search" placeholder="search your files" onkeyup=searchFiles()>
 
-                <form action="/download" method="POST" class="downloadForm" >
+                <form action="/delete" method="POST" id="#deleteForm" class="downloadForm" >
                     <% files.map(file => { %>
                         <div class="fileContainer" id="<%=file%>">
                             <div class="imgContainer">
                                 <img id="fileIcon" src=<%=pairFileIcon(file)%> alt="file icon" onclick=previewFile()>
                                 <p class="preview">preview</p>
                             </div>
-                            <div class="radioSelectContainer" onmousedown=toggleRadio() onclick=event.preventDefault()>
+                            <div class="radioSelectContainer" onmousedown=toggleRadioDelete(event) >
                                 <label for="<%=file%>" id="fileLabel"><%=file%></label>
                                 <input class="fileRadio" type="radio" name="<%=file%>" id="<%=file%>">
     
@@ -49,16 +50,30 @@
                         </div>
                     <% }) %>    
                 </form>
-                <button class="downloadBtn" onclick=evalFormRadios(event)>Download</button>
+                <button class="downloadBtn" style="background-color:red" onclick=renderAreYouSure(event)>Delete</button>
 
             </div>
 
             <div class="filePrevContainer">
-                <h2 class="filePrevTitle">File Previewer (PDF, Images, and Video Only)</h2>
+                <h2 class="filePrevTitle" style="color: red;">Delete Page File Previewer (PDF, Images, and Video Only)</h2>
                 <div class="filePreview">
                    
                 </div>
             </div>
+            <div class="blocker">
+                <div class="areYouSure" >
+                    <h2>Are you sure you want to delete these files?</h2>
+                    <ul class="deleteList">
+    
+                    </ul>
+                    <div class="confirmationContainer">
+                        <p class="yes" onclick=submit()>Yes</p>
+                        <p class="no" onclick=hideAreYouSure()>No</p>
+                    </div>
+                 
+                </div>
+            </div>
+          
            
         <% } %>
     </div>
@@ -110,5 +125,3 @@
 </body>
 
 </html>
-
-

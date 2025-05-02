@@ -1,0 +1,42 @@
+.blocker{
+    width: 100vw;
+    height: 100vh;
+    position: absolute;
+    top:0;
+    left:0;
+    background-color: rgba(0, 0, 0, 0.253);
+    display: none;
+
+}
+    .areYouSure{
+        background-color: white;
+        position: absolute; 
+        top:30vh;
+        right: 15vw;
+
+        padding: 3vh;
+        font-size: 1.5rem;
+    }
+        .deleteList{
+            font-size: 1.2rem;
+            max-height: 20vh;
+            overflow-y: auto;
+        }
+            .deleteListItem{
+
+            }
+        .confirmationContainer{
+            display: flex;
+            justify-content: space-evenly;
+        }
+            .yes{
+                color:red;
+            }
+            .yes, .no{
+                padding: 10px;
+                background-color: rgba(128, 128, 128, 0.226);
+                justify-self: start;
+            }
+            .yes:hover, .no:hover{
+                cursor: pointer;
+            }

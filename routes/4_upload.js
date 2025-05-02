@@ -23,32 +23,33 @@ router.get('/', (req, res) => {
 })
 
 router.post('/', upload.any(), async (req, res) => {
+    console.log(req.files)
     if(! req.files){
         res.status(400).render('upload', {message: 'No files received. Try again.'}) 
     }
   
     const uploadSize = uploadBytes(req.files)
 
-    if(fileSizeValid(req.user, uploadSize)){
-        const safeFiles = renameFiles(req.files)
-        try{
-            if(await writeFiles(safeFiles)){
+    // if(fileSizeValid(req.user, uploadSize)){
+        // const safeFiles = renameFiles(req.files)
+        // try{
+        //     if(await writeFiles(safeFiles)){
                 // update usedSpace in user db
-                usedSpaceUpdated(req.user, uploadSize)
+                // usedSpaceUpdated(req.user, uploadSize)
                 
                 //add files names and user to userFiles db
-                userFilesUpdate(req.user, safeFiles) /* HOW DO I ACCOMMODATE FOR AN ERROR HERE, IF ABOVE DB DATA ALREADY CHANGED? */
+                // userFilesUpdate(req.user, safeFiles) /* HOW DO I ACCOMMODATE FOR AN ERROR HERE, IF ABOVE DB DATA ALREADY CHANGED? */
                 res.send('<h1>Success!</h1> <a href="/">Home </a>')
-            }
-        }
-        catch(err){
-            console.log('The following error occurred during upload', err)
-            await deleteFiles(safeFiles) //deletes any files that may have saved to server
+        //     }
+        // }
+        // catch(err){
+        //     console.log('The following error occurred during upload', err)
+        //     await deleteFiles(safeFiles) //deletes any files that may have saved to server
 
-        }
+        // }
       
 
-    }
+    // }
 })
 
 module.exports = router

@@ -75,7 +75,7 @@
                     grid-column: 2/3;
 
                     display: grid;
-                    grid-template-columns:3fr 1fr;
+                    grid-template-columns:3fr;
 
 
                 }
@@ -128,8 +128,10 @@
                 text-align: center;
             }
                 .previewTest{
-                    width: 55vw;
-                    height: 70vh;
+                    min-width: 45vw;
+                    min-height: 50vh;
+                    /* max-width: 55vw; */
+                    max-height: 70vh;
                     font-size: 1.5rem;
                     font-weight: 200;
                 }

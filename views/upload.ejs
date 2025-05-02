@@ -4,14 +4,154 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>File Upload</title>
+    <link rel="stylesheet" href="/stylesheets/style.css">
+    <link rel="stylesheet" href="/stylesheets/upload.css">
+
 </head>
-<body>
-    <h1 class="fileUpload">File Upload:</h1>
-    <h3 class="storageSpace">You have __/5GB of storage left.</h3>
-    <form action="/upload" method="post" enctype="multipart/form-data">
-        <label for="file">Upload File</label>
-        <input type="file" name="fileUpload" class="fileUpload" multiple required onchange=console.log(event.target.file)>
-        <button class="submit">Upload</button>
+<body onmouseover=hideIcons() ondrop=handleBody(event) ondragover=handleDragOver(event)>
+    <a class="homeBtn" href="/">Home</a>
+
+    <form action="/upload" method="post" enctype="multipart/form-data" class="dropZone" ondrop=handleDrop(event) ondragover=handleDragOver(event) onmouseout=hideIcons()>
+        <div class="header">
+            <h1 class="fileUpload">File Upload:</h1>
+            <h3 class="instruct">Drag and drop your file(s) to the box below.</h3>
+            
+        </div>
+        <h3 class="reset" onmousedown=reset()>Reset</h3>
+
+        <div class="fileList">
+
+        </div>
+        <input type="file" name="files" id="hiddenFileInput" multiple hidden>
+        
+        <img id="dropIcon" class="add" src="/icons/add.png" alt="add files">
+
+        <h3 class="uploadBtn">Upload</h3>
     </form>
+
+
+
 </body>
+<script>
+    function handleBody(event){
+        event.preventDefault()
+        hideIcons()
+    }
+    function handleDrop(event) {
+        event.preventDefault()
+
+        const files = event.dataTransfer.files
+        const form = document.querySelector('.dropZone')
+
+        const formData = new FormData(form)
+        for (let file of files) {
+            console.log(file)
+            formData.append('fileUpload', file) 
+            
+            displayFile(file.name)
+           
+        }
+        // Submit when button clicks
+        const uploadBtn = document.querySelector('.uploadBtn')
+        uploadBtn.style.display = 'block'
+        
+
+        uploadBtn.addEventListener('click', () =>{
+            event.preventDefault()
+            const fileList = document.querySelector('.fileList')
+
+            fetch(form.action, {
+                method: form.method,
+                body: formData
+            }).then(response => {
+                if (response.ok) {
+                    alert("Upload successful!")
+                    setTimeout(() => {
+                        window.location.reload()
+
+                    },1000)
+
+                    // Optionally reset form or update UI
+                } else {
+                    alert("Upload failed.")
+                }
+            }).catch(error => {
+                console.error("Upload error:", error)
+            })
+        })
+        
+
+        hideIcons()
+    }
+    function displayFile(file){
+        const fileList = document.querySelector('.fileList')
+
+        const listItem = document.createElement('li')
+            listItem.className = 'fileListItem'
+         
+        const fileName = document.createElement('p')
+            fileName.className = 'fileName'
+            fileName.textContent = file
+        
+        const fileIcon = document.createElement('img')
+            fileIcon.className = 'fileIcon'
+            fileIcon.src = pairFileIcon(file)
+
+        listItem.append(fileIcon, fileName)
+        fileList.appendChild(listItem)
+    }
+    function handleDragOver(event){
+        event.preventDefault()
+    }
+    function hideIcons(){
+        const add = document.querySelector('.add')
+        add.style.display = 'none'
+    }
+
+    const dropZone = document.querySelector('.dropZone')
+    dropZone.addEventListener('dragenter', (event) =>  {
+        event.preventDefault()
+    
+        const add = document.querySelector('.add')
+        add.style.display = 'block'
+      
+    })
+
+    function pairFileIcon(file){ //called before render to assign img src
+        const fileImgSrc = { 
+            pdf: '/icons/pdf.png',
+            css: '/icons/css.png',
+            html: '/icons/html.png',
+            js: '/icons/js.png',
+
+            jpg: '/icons/jpg.png',
+            jpeg: '/icons/jpg.png',
+
+            mp4: '/icons/video.png',
+            mov: '/icons/video.png',
+            avi: '/icons/video.png',
+            wmv: '/icons/video.png',
+
+            
+            doc: '/icons/doc.png',
+            docx: '/icons/doc.png',
+            odt: '/icons/doc.png', 
+            rtf: '/icons/doc.png',
+
+            xls: '/icons/xl.png',
+            xlsx: '/icons/xl.png',
+            xlm: '/icons/xl.png',
+            ods: '/icons/xl.png', 
+            csv: '/icons/xl.png',
+            tsv: '/icons/xl.png',  
+       }
+        const fileType = file.split('.')[1].toLowerCase() 
+        return fileImgSrc[fileType] ? fileImgSrc[fileType] : '/icons/default.png'       
+    }
+    
+    function reset(event){
+        window.location.reload()
+    }
+
+</script>
 </html>

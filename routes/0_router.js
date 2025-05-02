@@ -10,6 +10,6 @@ router.use('/logout', require('./5_logout'))
 router.use('/download', require('./6_download'))
 router.use('/error', require('./7_error'))
 router.use('/preview', require('./8_preview'))
-
+router.use('/delete', require('./9_delete'))
 
 module.exports = router
