@@ -10,7 +10,7 @@
     <script type="text/javascript" src="/scripts/search.js"></script>
     <script type="text/javascript" src="/scripts/previewFile.js"></script>
     <script type="text/javascript" src="/scripts/radioHandlers.js"></script>
-    <script type="text/javascript" src="/scripts/formatDelete.js"></script>
+    <script type="text/javascript" src="/scripts/deleteHandlers.js"></script>
 
 </head>
 <body>
@@ -35,7 +35,7 @@
                 <h2 class="formTitle" style="color:rgb(255, 0, 0); justify-self: center;">Select Files to DELETE</h2>
                 <input type="text" class="search" placeholder="search your files" onkeyup=searchFiles()>
 
-                <form action="/delete" method="POST" id="#deleteForm" class="downloadForm" >
+                <form action="/delete" method="POST" id="deleteForm" class="downloadForm" >
                     <% files.map(file => { %>
                         <div class="fileContainer" id="<%=file%>">
                             <div class="imgContainer">
@@ -50,7 +50,7 @@
                         </div>
                     <% }) %>    
                 </form>
-                <button class="downloadBtn" style="background-color:red" onclick=renderAreYouSure(event)>Delete</button>
+                <button id="deleteBtn" class="downloadBtn" style="background-color:red" onclick=renderAreYouSure(event)>Delete</button>
 
             </div>
 

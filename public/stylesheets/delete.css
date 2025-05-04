@@ -1,3 +1,7 @@
+#deleteBtn{
+    display: none;
+}
+
 .blocker{
     width: 100vw;
     height: 100vh;
