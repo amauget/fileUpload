@@ -35,7 +35,7 @@ model userFiles {
   originalname  String  
   date          DateTime @default(now())
   storageName   String  @unique
-  size          Int
+  size          Int     
 }
 
 

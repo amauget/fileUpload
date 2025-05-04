@@ -36,15 +36,4 @@ function getFileTypes(filename){
     return filetype.toString().replaceAll(',','')
 }
 
-// [
-//     {
-//       fieldname: 'fileUpload',
-//       originalname: 'AaronMauget_Resume.pdf',
-//       encoding: '7bit',
-//       mimetype: 'application/pdf',
-//       buffer: <Buffer 25 50 44 46 2d 31 2e 37 0a 25 b5 ed ae fb 0a 34 20 30 20 6f 62 6a 0a 3c 3c 20 2f 4c 65 6e 67 74 68 20 35 20 30 20 52 0a 20 20 20 2f 46 69 6c 74 65 72 ... 536157 more bytes>,
-//       size: 536207
-//     }
-//   ]
-
 module.exports = { uploadBytes, fileSizeValid, renameFiles }

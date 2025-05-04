@@ -17,7 +17,7 @@ async function writeFiles(files){
         console.error(err)
         return false
     }
-   
+
 }
 
 module.exports = writeFiles

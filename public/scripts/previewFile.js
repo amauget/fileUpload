@@ -17,9 +17,9 @@ const fileToElement = {
         element: 'img',
         mimeType: 'image/png'
     },
-    csv: {
+    svg: {
         element: 'img',
-        mimeType: 'image/csv'
+        mimeType: 'image/svg'
     },
     mp4: {
         element: 'video',

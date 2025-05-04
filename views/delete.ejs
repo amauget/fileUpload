@@ -89,7 +89,6 @@
         </div>
      
     <%}%>
-
     <% function pairFileIcon(file){ //called before render to assign img src
         const fileImgSrc = { 
             pdf: '/icons/pdf.png',
@@ -97,8 +96,10 @@
             html: '/icons/html.png',
             js: '/icons/js.png',
 
-            jpg: '/icons/jpg.png',
-            jpeg: '/icons/jpg.png',
+            jpg: '/icons/photo.png',
+            jpeg: '/icons/photo.png',
+            png: '/icons/photo.png',
+            svg: '/icons/photo.png',
 
             mp4: '/icons/video.png',
             mov: '/icons/video.png',
@@ -121,6 +122,7 @@
         const fileType = file.split('.')[1].toLowerCase() 
         return fileImgSrc[fileType] ? fileImgSrc[fileType] : '/icons/default.png'       
     }%>
+
     
 </body>
 

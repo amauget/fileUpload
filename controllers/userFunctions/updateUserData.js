@@ -41,4 +41,24 @@ async function userFilesUpdate(user, files){
     }
 }
 
-module.exports = { usedSpaceUpdated, userFilesUpdate }
+async function userFilesRemove(user, files){
+    try{
+        await Promise.all(
+            files.map( async (file) => {
+                await prisma.userFiles.delete({
+                    where: {
+                        username: user.username,
+                        storageName: file.storageName
+
+                    }
+                })
+            })
+        )
+        console.log('done')
+    }
+    catch(err){
+        console.log('could not remove user file from db', err)
+    }
+}
+
+module.exports = { usedSpaceUpdated, userFilesUpdate, userFilesRemove }
