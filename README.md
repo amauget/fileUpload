@@ -2,7 +2,7 @@ LINKS:
     Icons: www.flaticon.com/free-icons/
         PDF: Pdf icons created by Prashu Rapol - Flaticon
 
-        JPG: g file icons">Jpg file icons created by Shuvo.Das - Flaticon
+        IMG: https://www.flaticon.com/free-icons/photo,  Photo icons created by Freepik - Flaticon
 
         .DOC(X): Document icons created by Freepik - Flaticon
 

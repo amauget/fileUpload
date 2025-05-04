@@ -9,9 +9,9 @@ router.get('/', (req, res) => {
 
 router.post('/', async (req, res, error) =>{
     const regStatus = await registerUser(req.body)
-    if(regStatus === 'success'){
-        console.log('success')
-        res.redirect('login')
+    if(regStatus === 'Success'){
+
+        res.send('<h1>Success! Click <a href="/login">Here</a> to Log in!')
     }
     else{
         console.log('invalid')

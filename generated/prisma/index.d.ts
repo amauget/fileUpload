@@ -3081,8 +3081,18 @@ export namespace Prisma {
 
   export type AggregateUserFiles = {
     _count: UserFilesCountAggregateOutputType | null
+    _avg: UserFilesAvgAggregateOutputType | null
+    _sum: UserFilesSumAggregateOutputType | null
     _min: UserFilesMinAggregateOutputType | null
     _max: UserFilesMaxAggregateOutputType | null
+  }
+
+  export type UserFilesAvgAggregateOutputType = {
+    size: number | null
+  }
+
+  export type UserFilesSumAggregateOutputType = {
+    size: number | null
   }
 
   export type UserFilesMinAggregateOutputType = {
@@ -3091,6 +3101,7 @@ export namespace Prisma {
     originalname: string | null
     date: Date | null
     storageName: string | null
+    size: number | null
   }
 
   export type UserFilesMaxAggregateOutputType = {
@@ -3099,6 +3110,7 @@ export namespace Prisma {
     originalname: string | null
     date: Date | null
     storageName: string | null
+    size: number | null
   }
 
   export type UserFilesCountAggregateOutputType = {
@@ -3107,9 +3119,18 @@ export namespace Prisma {
     originalname: number
     date: number
     storageName: number
+    size: number
     _all: number
   }
 
+
+  export type UserFilesAvgAggregateInputType = {
+    size?: true
+  }
+
+  export type UserFilesSumAggregateInputType = {
+    size?: true
+  }
 
   export type UserFilesMinAggregateInputType = {
     id?: true
@@ -3117,6 +3138,7 @@ export namespace Prisma {
     originalname?: true
     date?: true
     storageName?: true
+    size?: true
   }
 
   export type UserFilesMaxAggregateInputType = {
@@ -3125,6 +3147,7 @@ export namespace Prisma {
     originalname?: true
     date?: true
     storageName?: true
+    size?: true
   }
 
   export type UserFilesCountAggregateInputType = {
@@ -3133,6 +3156,7 @@ export namespace Prisma {
     originalname?: true
     date?: true
     storageName?: true
+    size?: true
     _all?: true
   }
 
@@ -3174,6 +3198,18 @@ export namespace Prisma {
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
      * 
+     * Select which fields to average
+    **/
+    _avg?: UserFilesAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: UserFilesSumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
      * Select which fields to find the minimum value
     **/
     _min?: UserFilesMinAggregateInputType
@@ -3204,6 +3240,8 @@ export namespace Prisma {
     take?: number
     skip?: number
     _count?: UserFilesCountAggregateInputType | true
+    _avg?: UserFilesAvgAggregateInputType
+    _sum?: UserFilesSumAggregateInputType
     _min?: UserFilesMinAggregateInputType
     _max?: UserFilesMaxAggregateInputType
   }
@@ -3214,7 +3252,10 @@ export namespace Prisma {
     originalname: string
     date: Date
     storageName: string
+    size: number
     _count: UserFilesCountAggregateOutputType | null
+    _avg: UserFilesAvgAggregateOutputType | null
+    _sum: UserFilesSumAggregateOutputType | null
     _min: UserFilesMinAggregateOutputType | null
     _max: UserFilesMaxAggregateOutputType | null
   }
@@ -3239,6 +3280,7 @@ export namespace Prisma {
     originalname?: boolean
     date?: boolean
     storageName?: boolean
+    size?: boolean
   }, ExtArgs["result"]["userFiles"]>
 
   export type userFilesSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
@@ -3247,6 +3289,7 @@ export namespace Prisma {
     originalname?: boolean
     date?: boolean
     storageName?: boolean
+    size?: boolean
   }, ExtArgs["result"]["userFiles"]>
 
   export type userFilesSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
@@ -3255,6 +3298,7 @@ export namespace Prisma {
     originalname?: boolean
     date?: boolean
     storageName?: boolean
+    size?: boolean
   }, ExtArgs["result"]["userFiles"]>
 
   export type userFilesSelectScalar = {
@@ -3263,9 +3307,10 @@ export namespace Prisma {
     originalname?: boolean
     date?: boolean
     storageName?: boolean
+    size?: boolean
   }
 
-  export type userFilesOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "username" | "originalname" | "date" | "storageName", ExtArgs["result"]["userFiles"]>
+  export type userFilesOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "username" | "originalname" | "date" | "storageName" | "size", ExtArgs["result"]["userFiles"]>
 
   export type $userFilesPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     name: "userFiles"
@@ -3276,6 +3321,7 @@ export namespace Prisma {
       originalname: string
       date: Date
       storageName: string
+      size: number
     }, ExtArgs["result"]["userFiles"]>
     composites: {}
   }
@@ -3704,6 +3750,7 @@ export namespace Prisma {
     readonly originalname: FieldRef<"userFiles", 'String'>
     readonly date: FieldRef<"userFiles", 'DateTime'>
     readonly storageName: FieldRef<"userFiles", 'String'>
+    readonly size: FieldRef<"userFiles", 'Int'>
   }
     
 
@@ -4111,7 +4158,8 @@ export namespace Prisma {
     username: 'username',
     originalname: 'originalname',
     date: 'date',
-    storageName: 'storageName'
+    storageName: 'storageName',
+    size: 'size'
   };
 
   export type UserFilesScalarFieldEnum = (typeof UserFilesScalarFieldEnum)[keyof typeof UserFilesScalarFieldEnum]
@@ -4312,6 +4360,7 @@ export namespace Prisma {
     originalname?: StringFilter<"userFiles"> | string
     date?: DateTimeFilter<"userFiles"> | Date | string
     storageName?: StringFilter<"userFiles"> | string
+    size?: IntFilter<"userFiles"> | number
   }
 
   export type userFilesOrderByWithRelationInput = {
@@ -4320,6 +4369,7 @@ export namespace Prisma {
     originalname?: SortOrder
     date?: SortOrder
     storageName?: SortOrder
+    size?: SortOrder
   }
 
   export type userFilesWhereUniqueInput = Prisma.AtLeast<{
@@ -4331,6 +4381,7 @@ export namespace Prisma {
     username?: StringFilter<"userFiles"> | string
     originalname?: StringFilter<"userFiles"> | string
     date?: DateTimeFilter<"userFiles"> | Date | string
+    size?: IntFilter<"userFiles"> | number
   }, "id" | "storageName">
 
   export type userFilesOrderByWithAggregationInput = {
@@ -4339,9 +4390,12 @@ export namespace Prisma {
     originalname?: SortOrder
     date?: SortOrder
     storageName?: SortOrder
+    size?: SortOrder
     _count?: userFilesCountOrderByAggregateInput
+    _avg?: userFilesAvgOrderByAggregateInput
     _max?: userFilesMaxOrderByAggregateInput
     _min?: userFilesMinOrderByAggregateInput
+    _sum?: userFilesSumOrderByAggregateInput
   }
 
   export type userFilesScalarWhereWithAggregatesInput = {
@@ -4353,6 +4407,7 @@ export namespace Prisma {
     originalname?: StringWithAggregatesFilter<"userFiles"> | string
     date?: DateTimeWithAggregatesFilter<"userFiles"> | Date | string
     storageName?: StringWithAggregatesFilter<"userFiles"> | string
+    size?: IntWithAggregatesFilter<"userFiles"> | number
   }
 
   export type SessionCreateInput = {
@@ -4473,6 +4528,7 @@ export namespace Prisma {
     originalname: string
     date?: Date | string
     storageName: string
+    size: number
   }
 
   export type userFilesUncheckedCreateInput = {
@@ -4481,6 +4537,7 @@ export namespace Prisma {
     originalname: string
     date?: Date | string
     storageName: string
+    size: number
   }
 
   export type userFilesUpdateInput = {
@@ -4489,6 +4546,7 @@ export namespace Prisma {
     originalname?: StringFieldUpdateOperationsInput | string
     date?: DateTimeFieldUpdateOperationsInput | Date | string
     storageName?: StringFieldUpdateOperationsInput | string
+    size?: IntFieldUpdateOperationsInput | number
   }
 
   export type userFilesUncheckedUpdateInput = {
@@ -4497,6 +4555,7 @@ export namespace Prisma {
     originalname?: StringFieldUpdateOperationsInput | string
     date?: DateTimeFieldUpdateOperationsInput | Date | string
     storageName?: StringFieldUpdateOperationsInput | string
+    size?: IntFieldUpdateOperationsInput | number
   }
 
   export type userFilesCreateManyInput = {
@@ -4505,6 +4564,7 @@ export namespace Prisma {
     originalname: string
     date?: Date | string
     storageName: string
+    size: number
   }
 
   export type userFilesUpdateManyMutationInput = {
@@ -4513,6 +4573,7 @@ export namespace Prisma {
     originalname?: StringFieldUpdateOperationsInput | string
     date?: DateTimeFieldUpdateOperationsInput | Date | string
     storageName?: StringFieldUpdateOperationsInput | string
+    size?: IntFieldUpdateOperationsInput | number
   }
 
   export type userFilesUncheckedUpdateManyInput = {
@@ -4521,6 +4582,7 @@ export namespace Prisma {
     originalname?: StringFieldUpdateOperationsInput | string
     date?: DateTimeFieldUpdateOperationsInput | Date | string
     storageName?: StringFieldUpdateOperationsInput | string
+    size?: IntFieldUpdateOperationsInput | number
   }
 
   export type StringFilter<$PrismaModel = never> = {
@@ -4670,6 +4732,11 @@ export namespace Prisma {
     originalname?: SortOrder
     date?: SortOrder
     storageName?: SortOrder
+    size?: SortOrder
+  }
+
+  export type userFilesAvgOrderByAggregateInput = {
+    size?: SortOrder
   }
 
   export type userFilesMaxOrderByAggregateInput = {
@@ -4678,6 +4745,7 @@ export namespace Prisma {
     originalname?: SortOrder
     date?: SortOrder
     storageName?: SortOrder
+    size?: SortOrder
   }
 
   export type userFilesMinOrderByAggregateInput = {
@@ -4686,6 +4754,11 @@ export namespace Prisma {
     originalname?: SortOrder
     date?: SortOrder
     storageName?: SortOrder
+    size?: SortOrder
+  }
+
+  export type userFilesSumOrderByAggregateInput = {
+    size?: SortOrder
   }
 
   export type StringFieldUpdateOperationsInput = {

@@ -138,7 +138,8 @@ exports.Prisma.UserFilesScalarFieldEnum = {
   username: 'username',
   originalname: 'originalname',
   date: 'date',
-  storageName: 'storageName'
+  storageName: 'storageName',
+  size: 'size'
 };
 
 exports.Prisma.SortOrder = {

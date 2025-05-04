@@ -1,3 +1,5 @@
+
+
 const fileToElement = { 
     pdf: {
         element: 'iframe', 
@@ -10,6 +12,14 @@ const fileToElement = {
     jpeg: {
         element: 'img',
         mimeType: 'image/jpeg',
+    },
+    png: {
+        element: 'img',
+        mimeType: 'image/png'
+    },
+    csv: {
+        element: 'img',
+        mimeType: 'image/csv'
     },
     mp4: {
         element: 'video',
@@ -27,6 +37,7 @@ const fileToElement = {
         element: 'video',
         mimeType: 'video/x-ms-wmv', 
     },  
+   
 }
 
 
@@ -68,11 +79,15 @@ function renderPreview(fileType, fileName, stream){
         filePreview.innerHTML = ''
         
         const previewElement = document.createElement(fileType.element)
-        previewElement.className = 'previewTest'
+        previewElement.className = 'previewElement'
         previewElement.src = `data:${fileType.mimeType};base64,${stream}`
-    
+
         if(fileType.element === 'video'){
             previewElement.controls = true
+        }
+        
+        else if(fileType.element === 'img'){
+            previewElement.id = 'imgPrev'
         }
     
         filePreview.appendChild(previewElement)
@@ -87,7 +102,7 @@ function renderUnavailable(fileName, err){
     const fileType = determineFileType(fileName)
 
     const prevNotAvail = document.createElement('h3')
-    prevNotAvail.className = 'previewTest'
+    prevNotAvail.className = 'previewElement'
 
     if(err){
         prevNotAvail.textContent = 'An error occurred while retrieving this file. Please try again later.'

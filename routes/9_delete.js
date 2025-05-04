@@ -1,6 +1,9 @@
 const { Router } = require('express')
 const router = Router()
 const getUserFileData = require('../controllers/userFunctions/getUserFiles')
+const { cleanListKeys } = require('../controllers/handleUnsafeChars')
+const getFileData = require('../controllers/fileHandlers/getFileData')
+
 
 router.get('/', async (req, res) => {
     let user = {}
@@ -8,12 +11,21 @@ router.get('/', async (req, res) => {
     if(req.user){
         user = req.user
         files = await getUserFileData(user)
+        res.render('delete', {user: user, files: files })
+
+    }
+    else{
+        res.redirect('/')
     }
     
-    res.render('delete', {user: user, files: files })
 })
 
+//DELETE Req
 router.post('/', async (req, res) => {
-    console.log(req.query)
+    const fileNamesCleaned = cleanListKeys(req.body)
+    if(fileNamesCleaned.length > 0){
+        const targetFilesDelete = await getFileData(fileNamesCleaned, req.user)
+        console.log(targetFilesDelete)
+    }
 })
 module.exports = router

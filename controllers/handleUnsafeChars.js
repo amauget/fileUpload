@@ -19,9 +19,17 @@ function htmlRestore(text) {
 function cleanListKeys(list){
   let fileNamesCleaned = []
   for(let key in list){
-      fileNamesCleaned.push(htmlEscape(key))
+    const cleanedKey = htmlEscape(key) 
+    if(cleanedKey === key){ 
+      fileNamesCleaned.push(cleanedKey) 
+    }
+    else{
+      return [] 
+      //breaks the connection between db and req if unsafe char encountered
+    }
+      
   }
-  return fileNamesCleaned
+  return fileNamesCleaned 
 }
 
 module.exports = { htmlEscape, htmlRestore, cleanListKeys }

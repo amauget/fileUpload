@@ -28,7 +28,8 @@ async function userFilesUpdate(user, files){
                     data: {
                         username: user.username,
                         originalname: file.originalname,
-                        storageName: file.storageName
+                        storageName: file.storageName,
+                        size: file.size
                     }
                 })
             })
