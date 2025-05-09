@@ -8,26 +8,34 @@
     <link rel="stylesheet" href="/stylesheets/upload.css">
 
 </head>
-<body onmouseover=hideIcons() ondrop=handleBody(event) ondragover=handleDragOver(event)>
+<body ondrop=handleBody(event) ondragover=handleDragOver(event)>
     <a class="homeBtn" href="/">Home</a>
+    
+    <div class="appendFiles">
+        <img id="dropIcon" class="add" src="/icons/add.png" alt="add files">
 
-    <form action="/upload" method="post" enctype="multipart/form-data" class="dropZone" ondrop=handleDrop(event) ondragover=handleDragOver(event) onmouseout=hideIcons()>
+        <h3 class="appendFilesTitle">Files Chosen:</h3>
+    </div>
+    
+    <h3 class="uploadBtn">Upload</h3>
+
+    <form action="/upload" method="post" enctype="multipart/form-data" class="dropZone" ondrop=handleDrop(event) >
         <div class="header">
             <h1 class="fileUpload">File Upload:</h1>
             <h3 class="instruct">Drag and drop your file(s) to the box below.</h3>
             
         </div>
-        <h3 class="reset" onmousedown=reset()>Reset</h3>
-
-        <div class="fileList">
-
-        </div>
-        <input type="file" name="files" id="hiddenFileInput" multiple hidden>
+        <h3 class="reset" onmousedown= window.location.reload()>Reset</h3>
+      
         
-        <img id="dropIcon" class="add" src="/icons/add.png" alt="add files">
 
-        <h3 class="uploadBtn">Upload</h3>
+
     </form>
+            
+
+    <div class="alert">
+        <h1 class="alertMessage"></h1>
+    </div>
 
 
 
@@ -39,18 +47,28 @@
     }
     function handleDrop(event) {
         event.preventDefault()
-
+        console.log('dropped')
         const files = event.dataTransfer.files
         const form = document.querySelector('.dropZone')
 
+        let rejectedFiles = []
+
         const formData = new FormData(form)
         for (let file of files) {
-            console.log(file)
-            formData.append('fileUpload', file) 
+            if(file.name.length < 55){
+                console.log(file)
+                formData.append('fileUpload', file) 
+            }
+            else{
+                rejectedFiles.push(file.name)
+            }
+          
             
             displayFile(file.name)
            
         }
+        if(rejectedFiles.length > 0){ rejectedFileAlert(rejectedFiles)}
+
         // Submit when button clicks
         const uploadBtn = document.querySelector('.uploadBtn')
         uploadBtn.style.display = 'block'
@@ -64,16 +82,26 @@
                 method: form.method,
                 body: formData
             }).then(response => {
+                 const alert = document.querySelector('.alert')
+                    alert.display = 'block'
+                const alertMessage = document.querySelector('.alertMessage')  
                 if (response.ok) {
-                    alert("Upload successful!")
-                    setTimeout(() => {
-                        window.location.reload()
+                    alert.style.background = 'rgb(2, 39, 250)'
+                    alertMessage.textContent = 'Success! Redirecting Home.'
 
+                    setTimeout(() => {
+                        const homeBtn = document.querySelector('.homeBtn')
+                        homeBtn.click()
                     },1000)
 
                     // Optionally reset form or update UI
                 } else {
-                    alert("Upload failed.")
+                    alert.textContent = 'alertMessage'
+                    alert.style.background = 'rgb(180, 3, 3)'
+                    setTimeout(() => {
+                        alert.style.display = 'hidden' 
+                        alertMessage.textContent = ''
+                    },2500)
                 }
             }).catch(error => {
                 console.error("Upload error:", error)
@@ -83,8 +111,16 @@
 
         hideIcons()
     }
+    
+    function rejectedFileAlert(rejectedFiles){
+        alert("The Following file(s) need shorter names: " + rejectedFiles)
+    }
+
+ 
+
     function displayFile(file){
-        const fileList = document.querySelector('.fileList')
+        // const fileList = document.querySelector('.fileList')
+        const fileList = document.querySelector('.appendFiles')
 
         const listItem = document.createElement('li')
             listItem.className = 'fileListItem'
@@ -103,6 +139,7 @@
     function handleDragOver(event){
         event.preventDefault()
     }
+
     function hideIcons(){
         const add = document.querySelector('.add')
         add.style.display = 'none'
@@ -124,8 +161,8 @@
             html: '/icons/html.png',
             js: '/icons/js.png',
 
-            jpg: '/icons/jpg.png',
-            jpeg: '/icons/jpg.png',
+            jpg: '/icons/photo.png',
+            jpeg: '/icons/photo.png',
 
             mp4: '/icons/video.png',
             mov: '/icons/video.png',
@@ -148,10 +185,7 @@
         const fileType = file.split('.')[1].toLowerCase() 
         return fileImgSrc[fileType] ? fileImgSrc[fileType] : '/icons/default.png'       
     }
-    
-    function reset(event){
-        window.location.reload()
-    }
+  
 
 </script>
 </html>

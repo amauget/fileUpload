@@ -5,7 +5,7 @@ const multer = require("multer")
 const storage = multer.memoryStorage() //prevents upload to server files until after the file is scrubbed/evaluated.
 const upload = multer({storage: storage})
 
-const { uploadBytes, fileSizeValid, renameFiles }  = require('../controllers/fileHandlers/fileAuditors.js')
+const { uploadBytes, fileSizeValid, renameFiles, fileNamesValid }  = require('../controllers/fileHandlers/fileAuditors.js')
 const writeFiles = require('../controllers/fileHandlers/writeFiles.js')
 const { usedSpaceUpdated, userFilesUpdate } = require('../controllers/userFunctions/updateUserData.js')
 const deleteFiles = require('../controllers/fileHandlers/deleteFiles.js')
@@ -27,10 +27,10 @@ router.post('/', upload.any(), async (req, res) => {
     if(! req.files){
         res.status(400).render('upload', {message: 'No files received. Try again.'}) 
     }
-  
+    console.log(req.files)
     const uploadSize = uploadBytes(req.files)
 
-    if(fileSizeValid(req.user, uploadSize)){
+    if(fileSizeValid(req.user, uploadSize) /* && fileNamesValid(req.files) */ ){
         const safeFiles = renameFiles(req.files)
         try{
             if(await writeFiles(safeFiles)){

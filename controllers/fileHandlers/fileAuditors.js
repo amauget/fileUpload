@@ -36,4 +36,12 @@ function getFileTypes(filename){
     return filetype.toString().replaceAll(',','')
 }
 
-module.exports = { uploadBytes, fileSizeValid, renameFiles }
+function fileNamesValid(files){
+    for(let i = 0; i < files.length; i ++){
+        if(files[i].name.length > 55)
+            return false
+    }
+    return true
+}
+
+module.exports = { uploadBytes, fileSizeValid, renameFiles, fileNamesValid }
