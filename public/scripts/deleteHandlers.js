@@ -71,6 +71,9 @@ function hideAreYouSure(){
 }
 
 function submit(){
+    hideAreYouSure()
     const form = document.querySelector('#deleteForm')
     form.submit()
+    const loader = document.querySelector('.loader')
+    loader.style.display = 'block'
 }

@@ -19,3 +19,5 @@ LINKS:
         Stop Icon (Upload): Stop sign icons created by Freepik - Flaticon
 
         Plus Icon: https://www.flaticon.com/free-icons/add,add icons">Add icons created by Pixel perfect - Flaticon
+
+        generic profile: Gemini AI

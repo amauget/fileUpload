@@ -6,6 +6,8 @@
     .userSpace{
         /* grid-row: 1/2; */
     }
+
+
   
     .formComponentContainer{
         grid-column: 1/2;
@@ -126,6 +128,8 @@
             }
             .filePreview{
                 text-align: center;
+                height: 55vh;
+                
             }
                 .previewElement{
                     min-width: 45vw;
@@ -153,6 +157,10 @@
         display: none;
         grid-template-columns: 15vw 40vw 30vw 15vw;
         grid-template-rows: 10vh 70vh 20vh;
+        animation: slideUp .2s ease-out
+    }
+    #hideUploadContainer{
+        animation: fadeOut .5s ease-in;
     }
         .fileListContainer{
             grid-row: 2/3;

@@ -2,6 +2,7 @@
     margin: 0;
     padding: 0;
     font-size: 1rem;
+     animation: fadeIn 0.5s ease-in;
 }
 .headerNoLogin{
     display: flex;
@@ -9,12 +10,110 @@
 }
 
 .headerLoggedIn{
-    display: grid;
-    grid-template-rows: 1fr;
-    grid-template-columns: 3fr 1fr 1fr;
+    display: flex;
+ 
+    justify-content: space-evenly;
     align-items: center;
     border-bottom: solid 1px black;
 }
+    .userContainer{
+        display: flex;
+        gap: 3vw;
+        align-items: center;
+        text-decoration: none;
+
+    }
+        .profileIcon{
+            height: 7vh;
+            border-radius: 15px;
+        }
+        .userName{
+            font-size: 2.2rem;
+            margin-right: 5vw;
+            color: black;
+        }
+    .deleteSelector, .uploadSelector, .logoutSelector{
+        font-size: 1.3rem;
+        text-decoration: none;
+        font-weight: bold;
+        cursor: pointer;
+        
+    }
+    .deleteSelector{
+        color: red;
+    }
+    .uploadSelector{
+        color: blue;
+    }
+    .logoutSelector{
+        color: black;
+        margin-left: 5vw;
+    }
 
     
-        
+/* HTML: <div class="loader"></div> */
+.loader {
+    position: fixed;
+    top: 50vh;
+    left: 50vw;
+    width: 15px;
+    aspect-ratio: 1;
+    border-radius: 50%;
+    animation: l5 1s infinite linear alternate;
+    display: none;
+}
+#previewLoader{
+    position:static;
+    justify-self: center;
+    align-self: center;
+}
+@keyframes l5 {
+    0%  {box-shadow: 20px 0 #000, -20px 0 #0002;background: #000 }
+    33% {box-shadow: 20px 0 #000, -20px 0 #0002;background: #0002}
+    66% {box-shadow: 20px 0 #0002,-20px 0 #000; background: #0002}
+    100%{box-shadow: 20px 0 #0002,-20px 0 #000; background: #000 }
+}
+
+@keyframes fadeIn {
+    0% {
+        opacity: 0;
+    }
+    50%{
+        opacity: .5;
+    }
+    100% {
+        opacity: 1;
+    }
+}   
+@keyframes fadeOut {
+    0% {
+        opacity: 1;
+        }
+ 
+    50%{
+        opacity: .5;
+    }
+    
+    100% {
+         opacity: 0;
+    }
+} 
+
+@keyframes slideUp {
+    0% {
+        opacity: 1;
+        top: 100vh;
+    }
+    25%{
+        top: 75vh;
+    }
+    50%{
+        top: 50vh;
+    }
+    75%{
+        top: 25vh;
+    }
+    100% {
+        top: 0vh;
+    }
+}

@@ -155,6 +155,7 @@ document.addEventListener('DOMContentLoaded', () => {
             js: '/icons/js.png',
             jpg: '/icons/photo.png',
             jpeg: '/icons/photo.png',
+            png: '/icons/photo.png',
             mp4: '/icons/video.png',
             mov: '/icons/video.png',
             avi: '/icons/video.png',
@@ -172,6 +173,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }
 
         const ext = fileName.split('.').pop().toLowerCase()
+        alert(ext)
         return fileImgSrc[ext] || '/icons/default.png'
     }
 

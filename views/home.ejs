@@ -8,17 +8,21 @@
     <script type="text/javascript" src="/scripts/search.js"></script>
     <script type="text/javascript" src="/scripts/previewFile.js"></script>
     <script type="text/javascript" src="/scripts/radioHandlers.js"></script>
+
     <title>Home Page</title>
 </head>
 <body>
     <%if(user.username){%>
         <div class="headerLoggedIn">
-            <h2 class="welcome"><%=user.displayedUsername%></h2>
-            <a href="/delete">Delete Files</a>
+            <div class="userContainer">
+                <img class="profileIcon" src="/icons/profile.png" alt="profileIcon">
+                <h2 class="userName"><%=user.displayedUsername%></h2>
+            </div>
+            <a class="deleteSelector" href="/delete">Delete Files</a>
 
-            <h3 class="uploadSelector" onclick=displayUploadForm()>Upload Files</a>
+            <h3 class="uploadSelector" onclick=displayUploadForm()>Upload Files</h3>
 
-            <a href="/logout">Log Out</a>
+            <a class="logoutSelector" href="/logout">Log Out</a>
         </div>
      
     <div class="bodyContainer">
@@ -56,7 +60,8 @@
             <div class="filePrevContainer">
                 <h2 class="filePrevTitle">File Previewer (PDF, Images, and Video Only)</h2>
                 <div class="filePreview">
-                   
+                             <div id="previewLoader" class="loader"></div>
+
                 </div>
             </div>
            
@@ -119,7 +124,6 @@
             <form action="/upload" method="POST" class="uploadForm" enctype="multipart/form-data">
                 <label class="inputLabel" for="fileInput">Upload Files Here:</label>
                 <h3 class="chooseFiles" onclick=handleInput(event)>Choose Files</h3>
-                <input type="file" name="files" class="fileInput" multiple required hidden onchange=displayFile(event.target.files)>
             </form>
             <button class="uploadBtn" hidden onclick=submitFiles()>Upload Files</button>
             <button class="exit" onclick=hideUploadForm()>X</button>
@@ -130,7 +134,7 @@
 
     const uploadForm = document.querySelector('.uploadForm')
     const chooseFiles = document.querySelector('.chooseFiles')
-    const fileInput = document.querySelector('.fileInput')
+    
     const uploadBtn = document.querySelector('.uploadBtn')
 
     const fileList = document.querySelector('.fileList')
@@ -138,7 +142,7 @@
     let fileName = 'fileInput'
     let increment = 1
     
-    let storedFileInputs = fileInput.files
+
     
     function handleInput(event){
         const newFileInput = document.createElement('input')
@@ -161,6 +165,9 @@
         const input = document.querySelector('#' + id)
         input.addEventListener('change', (e) => {
             displayFile(input.files)
+            if(input.files){
+                uploadBtn.style.display = 'block'
+            }
         })
     }
 
@@ -168,8 +175,7 @@
     function displayFile(fileNames) {
         for(let i = 0; i < fileNames.length; i++){
             const fileName = fileNames[i].name
-            // console.log(fileInput.files)
-            // fileInput[fileName] = fileNames[i]
+      
 
             const listItem = document.createElement('li')
             listItem.className = 'fileListItem'
@@ -185,11 +191,6 @@
             listItem.append(fileIcon, fileNameEl)
             fileList.appendChild(listItem)
         }
-        if(fileInput.files){
-            uploadBtn.style.display = 'block'
-        }
-
-       
     }
         function pairFileIcon(fileName) {
         const fileImgSrc = {
@@ -199,6 +200,7 @@
             js: '/icons/js.png',
             jpg: '/icons/photo.png',
             jpeg: '/icons/photo.png',
+            png: '/icons/photo.png',
             mp4: '/icons/video.png',
             mov: '/icons/video.png',
             avi: '/icons/video.png',
@@ -222,8 +224,14 @@
         uploadContainer.style.display = 'grid'
     }
     function hideUploadForm(){
-        resetUploads() //cancel upload form before hiding
-        uploadContainer.style.display = 'none'
+        uploadContainer.id = 'hideUploadContainer'
+        setTimeout(() => {
+            resetUploads() //cancel upload form before hiding
+            uploadContainer.style.display = 'none' 
+            window.Request
+            uploadContainer.id = ''
+        },500);
+  
     }
     function resetUploads(){
         fileList.innerHTML = ''

@@ -44,18 +44,25 @@ const fileToElement = {
 function previewFile(){
     const imgContainer = event.target.parentNode
     const fileName = (imgContainer.parentNode).querySelector('label').textContent
+    const loader = document.querySelector('.loader')
+ 
+    loader.hidden = false
     //used to retrieve file on server, determine file type for rendering element front-end.
 
     const fileType = fileToElement[determineFileType(fileName)]
 
     fetch(`/preview/?id=${fileName}`)
         .then(res => res.text())
-        .then(stream => 
+        .then(stream => {
             renderPreview(fileType, fileName, stream)
-        )
+               
+        })
+        
             .catch(err =>{
-                console.log(err)
+               
                 renderUnavailable(fileName, true)
+                loader.hidden = true
+
             })
 }
 
@@ -76,7 +83,7 @@ function renderPreview(fileType, fileName, stream){
     }
     else{
         const filePreview = document.querySelector('.filePreview')
-        filePreview.innerHTML = ''
+        filePreview.innerHTML = '<div id="previewLoader" class="loader" hidden></div>'
         
         const previewElement = document.createElement(fileType.element)
         previewElement.className = 'previewElement'
@@ -97,7 +104,7 @@ function renderPreview(fileType, fileName, stream){
 
 function renderUnavailable(fileName, err){
     const filePreview = document.querySelector('.filePreview')
-    filePreview.innerHTML = ''
+    filePreview.innerHTML = '<div id="previewLoader" class="loader" hidden></div>'
 
     const fileType = determineFileType(fileName)
 

@@ -14,12 +14,10 @@ router.get('/', async (req, res) => {
         user = req.user
         files = await getUserFileData(user)
         res.render('delete', {user: user, files: files })
-
     }
     else{
         res.redirect('/')
     }
-    
 })
 
 //DELETE Req
@@ -27,7 +25,7 @@ router.get('/', async (req, res) => {
 router.post('/', async (req, res) => {
     const fileNamesCleaned = cleanListKeys(req.body)
     try{
-        console.log(fileNamesCleaned)
+        
         if(fileNamesCleaned.length > 0){
             const targetFilesDelete = await getFileData(fileNamesCleaned, req.user)
         
@@ -40,7 +38,7 @@ router.post('/', async (req, res) => {
     
             await userFilesRemove(req.user, targetFilesDelete)
             
-            res.redirect('/') //OVERDRAFTING USEDSTORAGE RISK. Make sure this disallows negative usedStorage Balance
+            res.redirect('/delete') //OVERDRAFTING USEDSTORAGE RISK. Make sure this disallows negative usedStorage Balance
         }
     }
     catch(err){
