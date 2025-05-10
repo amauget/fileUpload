@@ -22,12 +22,17 @@ const verifyLogin = async (username, password, done) => {
     })
 
     try{
-        const validPassword = validatePassword(passwordClean, findUser[0].password, findUser[0].salt)
-
-        if(validPassword && findUser.length === 1){
-           return done(null, findUser[0])
+        if(findUser.length === 1){
+            console.log(findUser.length)
+            const validPassword = validatePassword(passwordClean, findUser[0].password, findUser[0].salt)
+            
+            if(validPassword){
+                return done(null, findUser[0])
+            }
+           
         }
-        done(null, false)
+         done(null, false)
+        
     }
     catch(err){
         console.log('error verify login')

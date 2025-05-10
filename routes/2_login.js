@@ -3,9 +3,13 @@ const router = Router()
 const passport = require('../controllers/authHandlers/passport')
 
 router.get('/', (req, res) => {
-    res.render('login')
+    let message = ''
+    if(req.query.status === 'fail'){
+        message = req.query.message
+    }
+    res.render('login', {message: message})
 })
 
-router.post('/', passport.authenticate('login', { failureRedirect: '/login', successRedirect: '/'}))
+router.post('/', passport.authenticate('login', { failureRedirect: '/login?status=fail&message=Invalid credentials', successRedirect: '/'}))
 
 module.exports = router

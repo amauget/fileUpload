@@ -35,7 +35,7 @@
         <% if(files.length > 0){%>
             <div class="formComponentContainer">
                 <h2 class="formTitle" style="color:rgb(255, 0, 0); justify-self: center;">Select Files to DELETE</h2>
-                <input type="text" class="search" placeholder="search your files" onkeyup=searchFiles()>
+                <input type="text" class="search" placeholder="search your files" onkeyup=searchFiles(event)>
 
                 <form action="/delete" method="POST" id="deleteForm" class="downloadForm" >
                     <% files.map(file => { %>

@@ -13,6 +13,7 @@
         grid-column: 1/2;
         display: grid;
         border-right: 1px solid black;
+        grid-template-rows: min-content min-content 60vh;
     }
         .formTitle{
             grid-row: 1/2;

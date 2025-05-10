@@ -36,7 +36,7 @@
         <% if(files.length > 0){%>
             <div class="formComponentContainer">
                 <h2 class="formTitle">Select Files to Download</h2>
-                <input type="text" class="search" placeholder="search your files" onkeyup=searchFiles()>
+                <input type="text" class="search" placeholder="search your files" onkeyup=searchFiles(event)>
 
                 <form action="/download" method="POST" class="downloadForm" >
                     <% files.map(file => { %>
