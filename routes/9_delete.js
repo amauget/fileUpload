@@ -23,7 +23,7 @@ router.get('/', async (req, res) => {
 //DELETE Req
 
 router.post('/', async (req, res) => {
-    const fileNamesCleaned = cleanListKeys(req.body)
+    const fileNamesCleaned = cleanListKeys(req.body) //only returns list if ALL chars are safe
     try{
         
         if(fileNamesCleaned.length > 0){

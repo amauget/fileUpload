@@ -152,25 +152,49 @@
         newFileInput.name = `${fileName}${increment}`
         newFileInput.id = `${fileName}${increment}`
         newFileInput.style.display = 'none'
-        increment++
+        increment++ 
         
         uploadForm.appendChild(newFileInput)
 
 
         newFileInput.click()
-        listenInputs(newFileInput.id)
+        listenInputs(newFileInput.id, uploadForm)
     }
 
-    function listenInputs(id){
+    function listenInputs(id, parent){
         const input = document.querySelector('#' + id)
         input.addEventListener('change', (e) => {
-            displayFile(input.files)
-            if(input.files){
-                uploadBtn.style.display = 'block'
+            if(safeFileNames(input.files)){
+                displayFile(input.files)
+                if(input.files){
+                    uploadBtn.style.display = 'block'
+                }
             }
+            else{
+                uploadForm.removeChild(input)
+            }
+
+       
         })
     }
 
+    function safeFileNames(files){
+        for(let i = 0; i < files.length; i ++){
+            if(htmlEscape(files[i].name) !== files[i].name){
+                alert(`This file contains the following character(s): ( &, ", ', <, > ). Please remove these from your file name and try again. `)
+                return false
+            }
+        }
+        return true      
+    }
+    function htmlEscape(text) {
+        return text
+        .replaceAll("&", "&amp;")
+        .replaceAll("<", "&lt;")
+        .replaceAll(">", "&gt;")
+        .replaceAll('"', "&quot;")
+        .replaceAll("'", "&#39;")
+    }
 
     function displayFile(fileNames) {
         for(let i = 0; i < fileNames.length; i++){

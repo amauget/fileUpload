@@ -8,8 +8,21 @@
 
 </head>
 <body>
+      <%if(user.username){%>
+        <div class="headerLoggedIn">
+            <div class="userContainer">
+                <img class="profileIcon" src="/icons/profile.png" alt="profileIcon">
+                <h2 class="userName"><%=user.displayedUsername%></h2>
+            </div>
+            <a class="deleteSelector" href="/delete">Delete Files</a>
+
+            <h3 class="uploadSelector" onclick=displayUploadForm()>Upload Files</h3>
+
+            <a class="logoutSelector" href="/logout">Log Out</a>
+        </div>
+     <%}%>
     <h1>Success!</h1>
-    <h2>Your files have uploaded. Heading home</h2> <a class="link" href="/" hidden></a> 
+    <h2>Your files have uploaded. Refreshing your file list.</h2> <a class="link" href="/" hidden></a> 
     <div class="loader"></div>
 </body>
 <script>setTimeout(() => {document.querySelector('.link').click()}, 1500)</script>

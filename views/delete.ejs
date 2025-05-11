@@ -26,7 +26,8 @@
      
     <div class="bodyContainer">
         <%if(files.length === 0){%>
-            <h3>You have no uploaded files </h3>
+            <h3 style="color: red;">You have no uploaded files to Delete.</h3>
+            <p>Click your file icon or username to go home.</p>
         <%}else{%>
             <h3 class="userSpace">You have <%=(5 - user.usedStorage/(1000 **3)).toFixed(2)%>GB of remaining storage</h3>
 

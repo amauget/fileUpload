@@ -39,7 +39,7 @@ router.post('/', upload.any(), async (req, res) => {
                 
                 // add files names and user to userFiles db
                 userFilesUpdate(req.user, safeFiles) /* HOW DO I ACCOMMODATE FOR AN ERROR HERE, IF ABOVE DB DATA ALREADY CHANGED? */
-                res.render('success')
+                res.render('success', {user: req.user})
             }
         }
         catch(err){
