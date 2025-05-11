@@ -8,9 +8,13 @@ router.get('/', async (req, res) => {
     if(req.user){
         user = req.user
         files = await getUserFileData(user)
+        res.render('home', {user: user, files: files })
+
+    }
+    else{
+        res.render('homeNoLogin')
     }
     
-    res.render('home', {user: user, files: files })
 })
 
 module.exports = router

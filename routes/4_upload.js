@@ -9,6 +9,7 @@ const { uploadBytes, fileSizeValid, renameFiles, fileNamesValid }  = require('..
 const writeFiles = require('../controllers/fileHandlers/writeFiles.js')
 const { usedSpaceUpdated, userFilesUpdate } = require('../controllers/userFunctions/updateUserData.js')
 const deleteFiles = require('../controllers/fileHandlers/deleteFiles.js')
+const existingFileNames = require('../controllers/HandleGet/checkUserFileName.js')
 
 router.get('/', (req, res) => {
     //what is a quick access to get total storage used by user?
@@ -25,28 +26,38 @@ router.get('/', (req, res) => {
 router.post('/', upload.any(), async (req, res) => {
 
     if(! req.files){
-        res.status(400).render('upload', {message: 'No files received. Try again.'}) 
+        res.status(400).render('unsuccessful', {message: 'No files received. Try again.'}) 
     }
-    console.log(req.files)
+
     const uploadSize = uploadBytes(req.files)
 
     if(fileSizeValid(req.user, uploadSize) /* && fileNamesValid(req.files) */ ){
-        const safeFiles = renameFiles(req.files)
-        try{
-            if(await writeFiles(safeFiles)){
-                // update usedSpace in user db
-                usedSpaceUpdated(req.user, uploadSize)
-                
-                // add files names and user to userFiles db
-                userFilesUpdate(req.user, safeFiles) /* HOW DO I ACCOMMODATE FOR AN ERROR HERE, IF ABOVE DB DATA ALREADY CHANGED? */
-                res.render('success', {user: req.user})
+        const safeFiles = renameFiles(req.files) 
+        const fileNames = safeFiles.map(file => {return file.originalname})
+        const existingFiles = await existingFileNames(fileNames, req.user)
+
+        if(existingFiles.length !== 0){
+            res.status(400).render('unsuccessful', {message: `File Name(s): [ ${existingFiles.toString().replaceAll(',', ', ')} ] already exist for this account. Please rename and try again.`})
+        }
+        else{
+            try{
+                if(await writeFiles(safeFiles)){
+                    // update usedSpace in user db
+                    usedSpaceUpdated(req.user, uploadSize)
+                    
+                    // add files names and user to userFiles db
+                    userFilesUpdate(req.user, safeFiles) /* HOW DO I ACCOMMODATE FOR AN ERROR HERE, IF ABOVE DB DATA ALREADY CHANGED? */
+                    res.render('success', {user: req.user})
+                }
+            }
+            catch(err){
+                console.log('The following error occurred during upload', err)
+                deleteFiles(safeFiles) //deletes any files that may have saved to server
+
             }
         }
-        catch(err){
-            console.log('The following error occurred during upload', err)
-            await deleteFiles(safeFiles) //deletes any files that may have saved to server
 
-        }
+        
       
 
     }

@@ -12,7 +12,6 @@
     <title>Home Page</title>
 </head>
 <body>
-    <%if(user.username){%>
         <div class="headerLoggedIn">
             <div class="userContainer">
                 <img class="profileIcon" src="/icons/profile.png" alt="profileIcon">
@@ -68,17 +67,7 @@
         <% } %>
     </div>
 
-  
-       
 
-    <%}else{%>
-        <div class="headerNoLogin">
-            <h1>Home</h1>
-            <a href="/login">Login</a>
-            <a href="/register">Register</a>
-        </div>
-     
-    <%}%>
 
     <% function pairFileIcon(file){ //called before render to assign img src
         const fileImgSrc = { 
@@ -161,10 +150,11 @@
         listenInputs(newFileInput.id, uploadForm)
     }
 
-    function listenInputs(id, parent){
+    async function listenInputs(id, parent){
         const input = document.querySelector('#' + id)
         input.addEventListener('change', (e) => {
-            if(safeFileNames(input.files)){
+            const fileNames = safeFileNames(input.files)
+            if(fileNames.length > 0){
                 displayFile(input.files)
                 if(input.files){
                     uploadBtn.style.display = 'block'
@@ -177,15 +167,16 @@
        
         })
     }
-
-    function safeFileNames(files){
+      function safeFileNames(files){
+        const fileNames = []
         for(let i = 0; i < files.length; i ++){
             if(htmlEscape(files[i].name) !== files[i].name){
                 alert(`This file contains the following character(s): ( &, ", ', <, > ). Please remove these from your file name and try again. `)
-                return false
+                return []
             }
+            fileNames.push(files[i].name)
         }
-        return true      
+        return fileNames
     }
     function htmlEscape(text) {
         return text
