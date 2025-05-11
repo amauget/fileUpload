@@ -3,20 +3,30 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/stylesheets/registerLogin.css">
+
     <title>Log in</title>
 </head>
 <body>
-    <h1>Log in</h1>
+    <div class="header">
+        <a class="home" href="/">Go Home</a>
+        <h4 class="dontHaveAccount">Don't Have an Account? Click <a class="registerLink" href="/register">Here</a> to Register.</h4>
 
-    <form action="/login" method="post">
-        <label for="username">Username</label>
+    </div>
+
+    <form class="login" action="/login" method="post">
+        <h1 class="loginTitle">Log in</h1>
+
+        <label for="usernameLabel">Username</label>
         <input type="text" name="username" required onkeydown=preventChars()>
         <label for="password">Password: </label>
         <input type="password" name="password" required onkeydown=preventChars()>
 
-        <button>submit</button>
+        <button class="submit">submit</button>
     </form>
         <h3 style="color:red"><%=message%></h3>
+
+
 </body>
 <script>
     function preventChars(){

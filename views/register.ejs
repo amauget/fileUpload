@@ -3,23 +3,30 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/stylesheets/registerLogin.css">
     <title>Register</title>
 </head>
 <body>
-    <h1>Register</h1>
-    <h2><%=message%></h2>
-    <a class="loginLink" href="/login">Log In</a>
-    <form action="/register" method="post">
-        <label for="username">Username</label>
-        <input type="text" name="username" required onkeydown=preventChars()>
-        <label for="password">Password: </label>
-        <input type="password" name="password" required onkeydown=preventChars()>
-        
-        <label for="secondPassword">Re-Enter Password:</label>
-        <input type="password" name="secondPassword" required onkeydown=preventChars()>
+    <div class="header">
+        <a class="home" href="/">Go Home</a>
+        <h4 class="haveAccount">Already Have an Account? Click <a class="loginLink" href="/login">Here</a> to Log In.</h4>
 
-        <button>submit</button>
+    </div>
+   
+    <form class="register" action="/register" method="post">
+        <h1 class="registerTitle">Register</h1>
+
+        <label class="usernameLabel" for="username">Username</label>
+        <input type="text" name="username" required onkeydown=preventChars()>
+        <label class="passwordLabel" for="password">Password: </label>
+        <input class="password" type="password" name="password" required onkeydown=preventChars()>
+        
+        <label class="secondPasswordLabel" for="secondPassword">Re-Enter Password:</label>
+        <input class="secondPassword" type="password" name="secondPassword" required onkeydown=preventChars()>
+
+        <button class="submit">submit</button>
     </form>
+     <h2 style="color: red"><%=message%></h2>
 </body>
 <script>
     function preventChars(){
@@ -43,4 +50,5 @@
   
         
 </script>
+
 </html>
