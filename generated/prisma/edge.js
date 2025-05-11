@@ -173,7 +173,7 @@ const config = {
     "db": {
       "url": {
         "fromEnvVar": "DATABASE_URL",
-        "value": "postgresql://amauget:kzvubybe2019!@localhost:5432/fileUpload?schema=public"
+        "value": "postgresql://postgres:qAoRFZwBQyDWxWuTkOKEtZcGNhHGOyxy@interchange.proxy.rlwy.net:51501/railway"
       }
     }
   },

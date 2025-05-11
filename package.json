@@ -21,6 +21,7 @@
     "live": "node --watch app.js",
     "migrate": "npx prisma migrate dev --name init",
     "test": "jest",
-    "testLive": "nodemon --exec 'jest' --watchAll"
+    "testLive": "nodemon --exec 'jest' --watchAll",
+    "start": "node app.js"
   }
 }
