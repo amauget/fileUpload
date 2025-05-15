@@ -16,13 +16,14 @@ function fileSizeValid(user, uploadSize){
                         //prev used space + sum of upload <= 5GB allowed per user
     return enoughSpace
 }
+console.log()
 
 function renameFiles(files){
     files.forEach(file => {
         const newName = crypto.randomUUID()
         const fileType = getFileTypes(file.originalname)
         file.storageName = `${newName}${fileType}`
-        file.path = `uploads/${file.storageName}`
+        file.path = __dirname + '/../../uploads/' + file.storageName
     })
     return files
 }
