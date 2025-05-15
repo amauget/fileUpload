@@ -1,3 +1,5 @@
+const crypto = require('crypto')
+
 function uploadBytes(files){
     let uploadSize = 0
     for(let file of files){
