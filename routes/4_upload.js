@@ -24,23 +24,22 @@ router.get('/', (req, res) => {
 })
 
 router.post('/', upload.any(), async (req, res) => {
-
-    if(! req.files){
-        res.status(400).render('unsuccessful', {message: 'No files received. Try again.'}) 
-    }
-
-    const uploadSize = uploadBytes(req.files)
-
-    if(fileSizeValid(req.user, uploadSize) /* && fileNamesValid(req.files) */ ){
-        const safeFiles = renameFiles(req.files) 
-        const fileNames = safeFiles.map(file => {return file.originalname})
-        const existingFiles = await existingFileNames(fileNames, req.user)
-
-        if(existingFiles.length !== 0){
-            res.status(400).render('unsuccessful', {message: `File Name(s): [ ${existingFiles.toString().replaceAll(',', ', ')} ] already exist for this account. Please rename and try again.`})
+    try{
+        if(! req.files){
+            res.status(400).render('unsuccessful', {message: 'No files received. Try again.'}) 
         }
-        else{
-            try{
+
+        const uploadSize = uploadBytes(req.files)
+
+        if(fileSizeValid(req.user, uploadSize) /* && fileNamesValid(req.files) */ ){
+            const safeFiles = renameFiles(req.files) 
+            const fileNames = safeFiles.map(file => {return file.originalname})
+            const existingFiles = await existingFileNames(fileNames, req.user)
+
+            if(existingFiles.length !== 0){
+                res.status(400).render('unsuccessful', {message: `File Name(s): [ ${existingFiles.toString().replaceAll(',', ', ')} ] already exist for this account. Please rename and try again.`})
+            }
+            else{
                 if(await writeFiles(safeFiles)){
                     // update usedSpace in user db
                     usedSpaceUpdated(req.user, uploadSize)
@@ -50,15 +49,11 @@ router.post('/', upload.any(), async (req, res) => {
                     res.render('success', {user: req.user})
                 }
             }
-            catch(err){
-                console.log('The following error occurred during upload', err)
-                deleteFiles(safeFiles) //deletes any files that may have saved to server
-
-            }
         }
-
-        
-      
+    }
+    catch(err){
+        console.log('The following error occurred during upload', err)
+        deleteFiles(safeFiles) //deletes any files that may have saved to server
 
     }
 })
