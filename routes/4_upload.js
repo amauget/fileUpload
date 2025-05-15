@@ -41,12 +41,17 @@ router.post('/', upload.any(), async (req, res) => {
             }
             else{
                 if(await writeFiles(safeFiles)){
+                    console.log(safeFiles)
                     // update usedSpace in user db
                     usedSpaceUpdated(req.user, uploadSize)
                     
                     // add files names and user to userFiles db
-                    userFilesUpdate(req.user, safeFiles) /* HOW DO I ACCOMMODATE FOR AN ERROR HERE, IF ABOVE DB DATA ALREADY CHANGED? */
+                    userFilesUpdate(req.user, safeFiles) 
                     res.render('success', {user: req.user})
+                }
+                else{
+                console.log('did not write')
+
                 }
             }
         }
