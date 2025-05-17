@@ -50,7 +50,7 @@ function previewFile(){
     const fileName = (imgContainer.parentNode).querySelector('label').textContent
     const loader = document.querySelector('.loader')
  
-    loader.hidden = false
+    loader.style.display = 'block'
     //used to retrieve file on server, determine file type for rendering element front-end.
 
     const fileType = fileToElement[determineFileType(fileName)]
@@ -59,7 +59,8 @@ function previewFile(){
         .then(res => res.text())
         .then(stream => {
             renderPreview(fileType, fileName, stream)
-               
+            loader.hidden = true
+            
         })
         
             .catch(err =>{

@@ -9,7 +9,6 @@ const streamFile = require('../controllers/fileHandlers/streamFile')
 router.get('/', async (req, res) => {
     const cleanFileName = htmlEscape(req.query.id)
     const targetFiles = await getFileData([cleanFileName], req.user)
-    console.log(targetFiles)
     await streamFile(res, targetFiles[0])
 })
 
