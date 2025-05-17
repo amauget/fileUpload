@@ -21,6 +21,10 @@ const fileToElement = {
         element: 'img',
         mimeType: 'image/svg'
     },
+    webp:{
+        element: 'img',
+        mimetype: 'image/webp'
+    },
     mp4: {
         element: 'video',
         mimeType: 'video/mp4',

@@ -70,6 +70,7 @@ let increment = 1
             jpg: '/icons/photo.png',
             jpeg: '/icons/photo.png',
             png: '/icons/photo.png',
+            webp: '/icons/photo.png',
             mp4: '/icons/video.png',
             mov: '/icons/video.png',
             avi: '/icons/video.png',
@@ -87,6 +88,7 @@ let increment = 1
         }
 
         const ext = fileName.split('.').pop().toLowerCase()
+        console.log(ext)
         return fileImgSrc[ext] || '/icons/default.png'
     }
     function displayUploadForm(){
