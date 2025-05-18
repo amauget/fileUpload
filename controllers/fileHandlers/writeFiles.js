@@ -2,7 +2,7 @@ const fs = require('fs')
 
 async function writeFiles(files){
     try{
-        const uploadPath = files[0].path //defined earlier as __dirname + '/../../uploads/', is correct
+        const uploadPath = files[0].path 
         await fs.promises.mkdir(uploadPath, {recursive: true})
 
         const uploadedFiles = await Promise.all(
