@@ -23,7 +23,7 @@ function renameFiles(files){
         const newName = crypto.randomUUID()
         const fileType = getFileTypes(file.originalname)
         file.storageName = `${newName}${fileType}`
-        file.path = __dirname + '/../../uploads/' + file.storageName
+        file.path = __dirname + '/../../uploads/' 
     })
     return files
 }
