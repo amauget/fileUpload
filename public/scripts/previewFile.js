@@ -59,14 +59,13 @@ function previewFile(){
         .then(res => res.text())
         .then(stream => {
             renderPreview(fileType, fileName, stream)
-            loader.hidden = true
-            
+            console.log(loader)
+            loader.style.display = 'none'
         })
         
             .catch(err =>{
-               
                 renderUnavailable(fileName, true)
-                loader.hidden = true
+                loader.style.display = 'none'
 
             })
 }
