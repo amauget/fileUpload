@@ -14,7 +14,6 @@ router.get('/', async (req, res) => {
     else{
         res.render('homeNoLogin')
     }
-    
 })
 
 module.exports = router
