@@ -316,7 +316,8 @@
 
     @media(max-width: 950px){
         .userName, .deleteSelector, .uploadSelector, .logoutSelector{
-            font-size: 1rem;
+            font-size: .85rem;
+            justify-self: center;
         }
         .profileIcon{
             height: 3vh;

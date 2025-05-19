@@ -16,7 +16,7 @@ function fileSizeValid(user, uploadSize){
                         //prev used space + sum of upload <= 5GB allowed per user
     return enoughSpace
 }
-console.log()
+
 
 function renameFiles(files){
     files.forEach(file => {
@@ -39,12 +39,14 @@ function getFileTypes(filename){
     return filetype.toString().replaceAll(',','')
 }
 
-function fileNamesValid(files){
+function invalidFileNames(files){
+    const invalidFileArray = []
     for(let i = 0; i < files.length; i ++){
-        if(files[i].name.length > 55)
-            return false
+        if(files[i].originalname.length > 55){
+            invalidFileArray.push(files[i].originalname)
+        }
     }
-    return true
+    return invalidFileArray
 }
 
-module.exports = { uploadBytes, fileSizeValid, renameFiles, fileNamesValid }
+module.exports = { uploadBytes, fileSizeValid, renameFiles, invalidFileNames }

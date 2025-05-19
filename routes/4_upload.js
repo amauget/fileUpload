@@ -5,22 +5,15 @@ const multer = require("multer")
 const storage = multer.memoryStorage() //prevents upload to server files until after the file is scrubbed/evaluated.
 const upload = multer({storage: storage})
 
-const { uploadBytes, fileSizeValid, renameFiles, fileNamesValid }  = require('../controllers/fileHandlers/fileAuditors.js')
+const { uploadBytes, fileSizeValid, renameFiles, invalidFileNames }  = require('../controllers/fileHandlers/fileAuditors.js')
 const writeFiles = require('../controllers/fileHandlers/writeFiles.js')
 const { usedSpaceUpdated, userFilesUpdate } = require('../controllers/userFunctions/updateUserData.js')
 const deleteFiles = require('../controllers/fileHandlers/deleteFiles.js')
 const existingFileNames = require('../controllers/HandleGet/checkUserFileName.js')
 
 router.get('/', (req, res) => {
-    //what is a quick access to get total storage used by user?
-    console.log(req.user)
-    if(! req.user){
-        res.redirect('/') //prevent non-user uploads
-    }
-    else{
-        res.render('upload', {message:''})
-
-    }
+    res.redirect('/') //upload integrated into homepage. 
+  
 })
 
 router.post('/', upload.any(), async (req, res) => {
@@ -30,9 +23,11 @@ router.post('/', upload.any(), async (req, res) => {
         }
 
         const uploadSize = uploadBytes(req.files)
+        const safeFiles = renameFiles(req.files) 
 
-        if(fileSizeValid(req.user, uploadSize) /* && fileNamesValid(req.files) */ ){
-            const safeFiles = renameFiles(req.files) 
+        const invalidFileNameArray = invalidFileNames(req.files)
+
+        if(fileSizeValid(req.user, uploadSize)  && invalidFileNameArray.length === 0){
             const fileNames = safeFiles.map(file => {return file.originalname})
             const existingFiles = await existingFileNames(fileNames, req.user)
 
@@ -41,7 +36,6 @@ router.post('/', upload.any(), async (req, res) => {
             }
             else{
                 if(await writeFiles(safeFiles)){
-                    console.log(safeFiles)
                     // update usedSpace in user db
                     usedSpaceUpdated(req.user, uploadSize)
                     
@@ -50,15 +44,22 @@ router.post('/', upload.any(), async (req, res) => {
                     res.render('success', {user: req.user})
                 }
                 else{
-                console.log('did not write')
-
+                    throw EvalError
                 }
             }
+        }
+        else{
+                res.status(400).render('unsuccessful', {message: `File Name(s): [ ${invalidFileNameArray.toString().replaceAll(',', ', ')} ] has too many characters. Please shorten name and try again.`})
+
         }
     }
     catch(err){
         console.log('The following error occurred during upload', err)
+
+        const safeFiles = renameFiles(req.files) 
         deleteFiles(safeFiles) //deletes any files that may have saved to server
+
+        res.status(501).render('unsuccessful', {message: `Something has gone wrong on our end. Please try again later.`})
 
     }
 })
