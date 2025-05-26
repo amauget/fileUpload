@@ -50,3 +50,43 @@
             }
 
 
+@media(max-width: 950px){
+    .areYouSure{
+        /* background-color: white;
+        position: absolute; 
+        top:30vh;
+        right: 15vw;
+
+        padding: 3vh;
+        font-size: 1.5rem; */
+        right: 2vw;
+        width: 90vw;
+        font-size: 1rem;
+        padding: 10px;
+    }
+     .deleteList{
+            /* font-size: 1.2rem;
+            max-height: 20vh;
+            overflow-y: auto; */
+            font-size: .8rem;
+
+        }
+            .deleteListItem{
+
+            }
+        .confirmationContainer{
+            /* display: flex;
+            justify-content: space-evenly; */
+        }
+            .yes{
+                /* color:red; */
+            }
+            .yes, .no{
+                /* padding: 10px;
+                background-color: rgba(128, 128, 128, 0.226);
+                justify-self: start; */
+            }
+            .yes:hover, .no:hover{
+                /* cursor: pointer; */
+            }
+}

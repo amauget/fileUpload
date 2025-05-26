@@ -6,12 +6,15 @@ const createZip = require('../controllers/fileHandlers/createZip')
 
 router.post('/', async (req, res) => {
     const fileNamesCleaned =  cleanListKeys(req.body) //takes in list, htmlEscape keys, returns array 
+    console.log(req.body)
     if(fileNamesCleaned.length > 0){
         const targetFiles = await getFileData(fileNamesCleaned, req.user)
     
-        const zipFile = await createZip(res, targetFiles)
+        await createZip(res, targetFiles)
     }
-    // else{}
+    else{
+        res.render('unsuccessful', {message: 'Malicious intent predicted.' })
+    }
 })
 
 module.exports = router

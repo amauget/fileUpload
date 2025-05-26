@@ -38,3 +38,27 @@
             margin-left: 2vw;
             width: 45vw;
         }
+
+@media(max-width: 950px){
+.headerNoLogin{}
+
+    .titleNoLogin{
+        font-size: 1.5rem;
+    }
+    .login, .register{
+        font-size: 1rem;
+    }
+.bodyContainer{
+    grid-template-columns: 1fr; 
+}
+    .featureContainer{
+        width: 90vw;
+    }
+        .featureTitle{
+            font-size: 1.2rem;
+        }
+        .feature{
+            margin: 0;
+            width: 90vw;
+        }
+}

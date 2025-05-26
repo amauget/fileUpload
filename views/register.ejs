@@ -8,16 +8,14 @@
 </head>
 <body>
     <div class="header">
-        <a class="home" href="/">Go Home</a>
         <h4 class="haveAccount">Already Have an Account? Click <a class="loginLink" href="/login">Here</a> to Log In.</h4>
-
     </div>
    
     <form class="register" action="/register" method="post">
         <h1 class="registerTitle">Register</h1>
 
         <label class="usernameLabel" for="username">Username</label>
-        <input type="text" name="username" required onkeydown=preventChars()>
+        <input class="username" type="text" name="username" required onkeydown=preventChars()>
         <label class="passwordLabel" for="password">Password: </label>
         <input class="password" type="password" name="password" required onkeydown=preventChars()>
         
@@ -26,7 +24,10 @@
 
         <button class="submit">submit</button>
     </form>
-     <h2 style="color: red"><%=message%></h2>
+    <h2 class="invalid" style="color: red"><%=message%></h2>
+
+    <a class="home" href="/">Go Home</a>
+
 </body>
 <script>
     function preventChars(){
