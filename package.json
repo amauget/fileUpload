@@ -23,5 +23,8 @@
     "test": "jest",
     "testLive": "nodemon --exec 'jest' --watchAll",
     "start": "node app.js"
+  },
+  "engines": {
+    "node": "20.18.0"
   }
 }
